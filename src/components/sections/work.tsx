@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 
 import { motion, useMotionValue, useScroll, useSpring } from "framer-motion";

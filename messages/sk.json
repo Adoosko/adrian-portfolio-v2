@@ -76,7 +76,7 @@
           "VAPI AI"
         ],
         "links": {
-          "live": "https://naformu.adrianfinik.com"
+          "live": "https://naformu.adrianfinik.sk"
         },
         "image": {
           "light": "/naformu-black.png",
@@ -90,7 +90,7 @@
         "description": "Toto je moderná, animovaná webová stránka vytvorená pomocou Reactu. Intenzívne využíva video a animácie na vytvorenie dynamického používateľského zážitku, pravdepodobne pre portfólio alebo prezentačný web.",
         "technologies": ["React", "Vite", "GSAP", "Tailwind CSS", "ESLint", "Prettier"],
         "links": {
-          "live": "https://redefine.adrianfinik.com"
+          "live": "https://redefine.adrianfinik.sk"
         },
         "video": "/redifine.mp4"
       }

@@ -76,7 +76,7 @@
           "VAPI AI"
         ],
         "links": {
-          "live": "https://naformu.adrianfinik.com"
+          "live": "https://naformu.adrianfinik.sk"
         },
         "image": {
           "light": "/naformu-black.png",
@@ -90,7 +90,7 @@
         "description": "This is a modern, animated website built with React. It heavily features video and animations to create a dynamic user experience, likely for a portfolio or showcase website.",
         "technologies": ["React", "Vite", "GSAP", "Tailwind CSS", "ESLint", "Prettier"],
         "links": {
-          "live": "https://redefine.adrianfinik.com"
+          "live": "https://redefine.adrianfinik.sk"
         },
         "video": "/redifine.mp4"
       }
