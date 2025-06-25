@@ -7,17 +7,17 @@ import { ArrowUp, ExternalLink, Github, Linkedin, Mail } from "lucide-react";
 const socialLinks = [
   {
     name: "GitHub",
-    href: "https://github.com/adrianfinik",
+    href: "https://github.com/Adoosko",
     icon: Github,
   },
   {
     name: "LinkedIn", 
-    href: "https://linkedin.com/in/adrianfinik",
+    href: "www.linkedin.com/in/adrián-finik-26694536b",
     icon: Linkedin,
   },
   {
     name: "Email",
-    href: "mailto:adrian@minimalistic.studio", 
+    href: "mailto:adoosdeveloper@gmail.com", 
     icon: Mail,
   },
 ];

@@ -34,27 +34,14 @@
         "description": "My personal portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It's designed to be a showcase of my skills and a platform for my thoughts.",
         "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
         "links": {
-          "github": "https://github.com/adrianfinik/adrian-portfolio-v2",
+          "github": "https://github.com/Adoosko/adrian-portfolio-v2",
           "live": "https://adrianfinik.com"
         },
         "image": {
           "light": "/naformu-black.png",
           "dark": "/naformu-white.png"
-        }
-      },
-      {
-        "id": "2",
-        "title": "E-commerce Platform",
-        "description": "A full-featured e-commerce platform with a custom CMS, built for a client. It includes product management, order processing, and a customer-facing storefront.",
-        "technologies": ["React", "Node.js", "Express", "PostgreSQL", "Stripe"],
-        "links": {
-          "demo": "#"
         },
-        "image": {
-          "light": "/naformu-black.png",
-          "dark": "/naformu-white.png"
-        },
-        "video": "https://videos.pexels.com/video-files/4784363/4784363-hd_1920_1080_25fps.mp4"
+        "video": "/ado.mp4"
       },
       {
         "id": "3",
@@ -93,6 +80,36 @@
           "live": "https://redefine.adrianfinik.sk"
         },
         "video": "/redifine.mp4"
+      },
+      {
+        "id": "5",
+        "title": "KTA",
+        "description": "Landing page for a Slovak company with a premium design, which deals with protection against cyber attacks.",
+        "technologies": ["React", "Vite", "Framer Motion", "Tailwind CSS"],
+        "links": {
+          "live": "https://kta.adrianfinik.sk"
+        },
+        "video":"/kta.mp4"
+      },
+      {
+        "id": "6",
+        "title": "Chlebičky",
+        "description": "Brand website for a maker of custom open-faced sandwiches for weddings and various occasions.",
+        "technologies": ["React", "Vite", "Tailwind CSS", "Framer Motion"],
+        "links": {
+          "live": "https://chlebik.adrianfinik.sk"
+        },
+        "video":"chlebicky.mp4"
+      },
+      {
+        "id": "7",
+        "title": "Glisten AI",
+        "description": "A modern portfolio that is editable with Prismic CMS.",
+        "technologies": ["Next.js", "Prismic", "Tailwind CSS", "Framer Motion"],
+        "links": {
+          "live": "https://glisten-ai.adrianfinik.sk/"
+        },
+        "video": "/glisten.mp4"
       }
     ]
   },
