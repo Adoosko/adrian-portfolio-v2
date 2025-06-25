@@ -1,0 +1,131 @@
+{
+  "HomePage": {},
+  "Hero": {
+    "greeting": "Ahoj, volám sa",
+    "title": "Adrian Finik",
+    "subtitle": "Tvorím veci pre web.",
+    "description": "Som webový vývojár, ktorý sa špecializuje na vytváranie výnimočných digitálnych zážitkov v minimalistic.studio.",
+    "ctaText": "Projekty",
+    "cta2Text": "Kontakt"
+  },
+  "About": {
+    "title": "O mne",
+    "description": "Ahoj! Som Adrian, webový vývojár s vášňou pre tvorbu digitálnych zážitkov, ktoré sa nachádzajú na pomedzí dizajnu a technológie. Moja cesta sa začala v roku 2019, keď som sa rozhodol skúsiť upravovať vlastné šablóny na Tumblri – ukázalo sa, že úprava tlačidla pre reblog ma naučila veľa o HTML & CSS! Dnes mám tú česť pracovať v minimalistic.studio, kde sa zameriavam na tvorbu prístupných, inkluzívnych produktov a digitálnych zážitkov pre rôznych klientov. Baví ma pracovať na pomedzí dizajnu a vývoja a vytvárať produkty, ktoré sú nielen funkčné, ale taktiež poskytujú zmysluplné používateľské zážitky. Keď práve nekódujem, nájdete ma, ako skúmam nové technológie, prispievam do open source projektov alebo zdieľam vedomosti s vývojárskou komunitou.",
+    "tech_list_intro": "Tu je niekoľko technológií, s ktorými v poslednej dobe pracujem:",
+    "technologies": [
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "PostgreSQL"
+    ]
+  },
+  "Work": {
+    "title": "Niektoré z mojich projektov",
+    "featured": "Odporúčaný projekt",
+    "no_projects": "Nie sú k dispozícii žiadne odporúčané projekty.",
+    "projects": [
+      {
+        "id": "1",
+        "title": "Portfólio v2",
+        "description": "Moje osobné portfólio, vytvorené pomocou Next.js, Tailwind CSS a Framer Motion. Je navrhnuté ako ukážka mojich zručností a platforma pre moje myšlienky.",
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        "links": {
+          "github": "https://github.com/adrianfinik/adrian-portfolio-v2",
+          "live": "https://adrianfinik.com"
+        },
+        "image": {
+          "light": "/naformu-black.png",
+          "dark": "/naformu-white.png"
+        },
+        "video": "https://videos.pexels.com/video-files/4784363/4784363-hd_1920_1080_25fps.mp4"
+      },
+      {
+        "id": "2",
+        "title": "E-commerce platforma",
+        "description": "Plne funkčná e-commerce platforma s vlastným CMS, vytvorená pre klienta. Zahŕňa správu produktov, spracovanie objednávok a zákaznícke rozhranie.",
+        "technologies": ["React", "Node.js", "Express", "PostgreSQL", "Stripe"],
+        "links": {
+          "demo": "#"
+        },
+        "image": {
+          "light": "/naformu-white.png",
+          "dark": "/naformu-white.png"
+        }
+      },
+      {
+        "id": "3",
+        "title": "NaFormu",
+        "description": "NaFormu je inovatívna online platforma zameraná na slovenskú kuchyňu a kulinárske umenie, ktorá spája tradičné recepty s modernými technológiami. Naša platforma je navrhnutá pre všetkých milovníkov varenia - od začiatočníkov až po skúsených kuchárov.",
+        "technologies": [
+          "Next.js 15+",
+          "React 18",
+          "Tailwind CSS v4",
+          "Shadcn/ui",
+          "Framer Motion v12+",
+          "Clerk",
+          "Drizzle ORM",
+          "PostgreSQL",
+          "Cloudinary",
+          "Lucide React",
+          "TypeScript",
+          "OpenAPI",
+          "VAPI AI"
+        ],
+        "links": {
+          "live": "https://naformu.adrianfinik.com"
+        },
+        "image": {
+          "light": "/naformu-black.png",
+          "dark": "/naformu-white.png"
+        },
+        "video": "/naformu.mp4"
+      },
+      {
+        "id": "4",
+        "title": "Redefine Gaming",
+        "description": "Toto je moderná, animovaná webová stránka vytvorená pomocou Reactu. Intenzívne využíva video a animácie na vytvorenie dynamického používateľského zážitku, pravdepodobne pre portfólio alebo prezentačný web.",
+        "technologies": ["React", "Vite", "GSAP", "Tailwind CSS", "ESLint", "Prettier"],
+        "links": {
+          "live": "https://redefine.adrianfinik.com"
+        },
+        "video": "/redifine.mp4"
+      }
+    ]
+  },
+  "Contact": {
+    "title": "Kontaktujte ma",
+    "description": "Momentálne hľadám nové príležitosti. Či už máte otázku, alebo len chcete pozdraviť, pokúsim sa vám čo najskôr odpovedať!",
+    "name": "Meno",
+    "name_placeholder": "Vaše meno",
+    "email": "E-mail",
+    "email_placeholder": "vas.email@example.com",
+    "message": "Správa",
+    "message_placeholder": "Vaša správa...",
+    "send_button": "Odoslať správu",
+    "sending_button": "Odosielam...",
+    "validation": {
+      "name_required": "Meno musí mať aspoň 2 znaky",
+      "email_invalid": "Zadajte prosím platný e-mail",
+      "message_required": "Správa musí mať aspoň 10 znakov"
+    }
+  },
+  "Navigation": {
+    "about": "O mne",
+    "work": "Projekty",
+    "contact": "Kontakt",
+    "resume": "Životopis",
+    "download_resume": "Stiahnuť životopis"
+  },
+  "Footer": {
+    "description": "Webový vývojár vytvárajúci čisté a prístupné digitálne zážitky.",
+    "navigation": "Navigácia",
+    "connect": "Spojenie",
+    "rights_reserved": "Všetky práva vyhradené.",
+    "built_with": "Vytvorené s Next.js & Tailwind CSS",
+    "back_to_top": "↑ Späť na vrch"
+  }
+}

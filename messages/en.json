@@ -1,0 +1,131 @@
+{
+  "HomePage": {},
+  "Hero": {
+    "greeting": "Hi, my name is",
+    "title": "Adrian Finik",
+    "subtitle": "I build things for the web.",
+    "description": "I'm a web developer specializing in creating exceptional digital experiences at minimalistic.studio.",
+    "ctaText": "Projects",
+    "cta2Text": "Contact"
+  },
+  "About": {
+    "title": "About Me",
+    "description": "Hello! I'm Adrian, a web developer passionate about creating digital experiences that live at the intersection of design and technology. My journey started back in 2019 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS! Fast-forward to today, and I've had the privilege of working at minimalistic.studio, where I focus on building accessible, inclusive products and digital experiences for a variety of clients. I enjoy working at the intersection of design and development, creating products that are not only functional but also provide meaningful user experiences. When I'm not coding, you can find me exploring new technologies, contributing to open source projects, or sharing knowledge with the developer community.",
+    "tech_list_intro": "Here are a few technologies I've been working with recently:",
+    "technologies": [
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "PostgreSQL"
+    ]
+  },
+  "Work": {
+    "title": "Some Things I've Built",
+    "featured": "Featured Project",
+    "no_projects": "No featured projects available.",
+    "projects": [
+      {
+        "id": "1",
+        "title": "Portfolio v2",
+        "description": "My personal portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It's designed to be a showcase of my skills and a platform for my thoughts.",
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        "links": {
+          "github": "https://github.com/adrianfinik/adrian-portfolio-v2",
+          "live": "https://adrianfinik.com"
+        },
+        "image": {
+          "light": "/naformu-black.png",
+          "dark": "/naformu-white.png"
+        }
+      },
+      {
+        "id": "2",
+        "title": "E-commerce Platform",
+        "description": "A full-featured e-commerce platform with a custom CMS, built for a client. It includes product management, order processing, and a customer-facing storefront.",
+        "technologies": ["React", "Node.js", "Express", "PostgreSQL", "Stripe"],
+        "links": {
+          "demo": "#"
+        },
+        "image": {
+          "light": "/naformu-black.png",
+          "dark": "/naformu-white.png"
+        },
+        "video": "https://videos.pexels.com/video-files/4784363/4784363-hd_1920_1080_25fps.mp4"
+      },
+      {
+        "id": "3",
+        "title": "NaFormu",
+        "description": "NaFormu is an innovative online platform focused on Slovak cuisine and culinary art, which combines traditional recipes with modern technologies. Our platform is designed for all cooking lovers - from beginners to experienced chefs.",
+        "technologies": [
+          "Next.js 15+",
+          "React 18",
+          "Tailwind CSS v4",
+          "Shadcn/ui",
+          "Framer Motion v12+",
+          "Clerk",
+          "Drizzle ORM",
+          "PostgreSQL",
+          "Cloudinary",
+          "Lucide React",
+          "TypeScript",
+          "OpenAPI",
+          "VAPI AI"
+        ],
+        "links": {
+          "live": "https://naformu.adrianfinik.com"
+        },
+        "image": {
+          "light": "/naformu-black.png",
+          "dark": "/naformu-white.png"
+        },
+        "video": "/naformu.mp4"
+      },
+      {
+        "id": "4",
+        "title": "Redefine Gaming",
+        "description": "This is a modern, animated website built with React. It heavily features video and animations to create a dynamic user experience, likely for a portfolio or showcase website.",
+        "technologies": ["React", "Vite", "GSAP", "Tailwind CSS", "ESLint", "Prettier"],
+        "links": {
+          "live": "https://redefine.adrianfinik.com"
+        },
+        "video": "/redifine.mp4"
+      }
+    ]
+  },
+  "Contact": {
+    "title": "Get In Touch",
+    "description": "I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+    "name": "Name",
+    "name_placeholder": "Your name",
+    "email": "Email",
+    "email_placeholder": "your.email@example.com",
+    "message": "Message",
+    "message_placeholder": "Your message...",
+    "send_button": "Send Message",
+    "sending_button": "Sending...",
+    "validation": {
+      "name_required": "Name must be at least 2 characters",
+      "email_invalid": "Please enter a valid email",
+      "message_required": "Message must be at least 10 characters"
+    }
+  },
+  "Navigation": {
+    "about": "About",
+    "work": "Work",
+    "contact": "Contact",
+    "resume": "Resume",
+    "download_resume": "Download Resume"
+  },
+  "Footer": {
+    "description": "Web developer creating clean, accessible digital experiences.",
+    "navigation": "Navigation",
+    "connect": "Connect",
+    "rights_reserved": "All rights reserved.",
+    "built_with": "Built with Next.js & Tailwind CSS",
+    "back_to_top": "↑ Back to top"
+  }
+}
