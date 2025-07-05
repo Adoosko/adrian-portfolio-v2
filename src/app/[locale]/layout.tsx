@@ -1,4 +1,4 @@
-// app/[locale]/layout.tsx
+// src/app/[locale]/layout.tsx
 import ClientProviders from "@/components/ClientProviders";
 import { routing } from "@/i18n/routing";
 import { boska } from "@/lib/fonts";
@@ -20,8 +20,18 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
-  const { locale } = await params;
+// Definícia vlastných typov pre async params
+interface LayoutProps {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}
+
+interface MetadataProps {
+  params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({ params }: MetadataProps) {
+  const { locale } = await params; // await je kľúčový
   const t = await getTranslations({ locale, namespace: 'Hero' });
   const title = t('title');
   const description = t('description');
@@ -63,11 +73,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 export default async function LocaleLayout({
   children,
   params,
-}: {
-  children: React.ReactNode;
-  params: { locale: Promise<string> };
-}) {
-  const { locale } = await params;
+}: LayoutProps) {
+  const { locale } = await params; // await je kľúčový
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
@@ -75,8 +82,6 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const t = await getTranslations({ locale, namespace: "Hero" });
-  const title = t("title");
-  const description = t("description");
 
   return (
     <html lang={locale} suppressHydrationWarning>
