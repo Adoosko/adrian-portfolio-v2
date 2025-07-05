@@ -35,7 +35,6 @@ export function Hero({ data }: HeroProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10%" });
   const animateHero = useAnimationStore((state) => state.animateHero);
-  
   // Motion values pre pokročilé interakcie
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -79,27 +78,6 @@ export function Hero({ data }: HeroProps) {
       transition: {
         duration: 1.2,
         ease: easings.dramatic,
-      },
-    },
-  };
-
-  // Špeciálne variants pre title s dramatickým efektom
-  const titleVariants = {
-    hidden: { 
-      y: 100, 
-      opacity: 0,
-      scale: 0.8,
-      rotateX: 90,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      rotateX: 0,
-      transition: {
-        duration: 1.4,
-        ease: easings.elastic,
-        delay: 0.3,
       },
     },
   };
@@ -206,29 +184,12 @@ export function Hero({ data }: HeroProps) {
             </motion.div>
           </motion.div>
 
-          {/* Main Title s dramatickým efektom */}
+          {/* Main Title */}
           <motion.h1
-            variants={titleVariants}
+            variants={itemVariants}
             className=" text-4xl lg:text-7xl font-serif text-foreground mb-6 leading-tight"
-            style={{
-              transformOrigin: "center bottom",
-            }}
           >
-            {heroData.title.split('').map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.8 + index * 0.05,
-                  ease: easings.bounce,
-                }}
-                className="inline-block"
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </motion.span>
-            ))}
+            {heroData.title}
           </motion.h1>
 
           {/* Subtitle */}

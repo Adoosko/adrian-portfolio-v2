@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { useAnimationStore } from "@/stores/animation-store";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { CustomCursor } from "./CustomCursor";
 import { LenisProvider } from "./LenisProvider";
 import Loader from "./ui/loader";
 import { Toaster } from "./ui/sonner";
@@ -33,6 +34,7 @@ export default function ClientProviders({
 
   return (
     <>
+      <CustomCursor />
       <NextIntlClientProvider locale={locale} messages={messages}>
         <ThemeProvider
           attribute="class"
