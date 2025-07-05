@@ -129,5 +129,9 @@
     "rights_reserved": "Všetky práva vyhradené.",
     "built_with": "Vytvorené s Next.js & Tailwind CSS",
     "back_to_top": "↑ Späť na vrch"
-  }
+  },
+ "CookieConsent": {
+   "message": "Táto webová stránka používa súbory cookie na zlepšenie používateľského zážitku.",
+   "buttonText": "Súhlasím"
+ }
 }

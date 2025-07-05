@@ -129,5 +129,9 @@
     "rights_reserved": "All rights reserved.",
     "built_with": "Built with Next.js & Tailwind CSS",
     "back_to_top": "↑ Back to top"
-  }
+  },
+ "CookieConsent": {
+   "message": "This website uses cookies to enhance the user experience.",
+   "buttonText": "I agree"
+ }
 }
