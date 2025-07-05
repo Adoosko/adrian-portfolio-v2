@@ -51,7 +51,7 @@
         "links": {
           "live": "https://naformu.adrianfinik.sk"
         },
-        "image": "/naformu-white.png"
+        "image": "/optimized/naformu-white.png"
       },
       {
         "id": "4",
@@ -61,7 +61,7 @@
         "links": {
           "live": "https://redefine.adrianfinik.sk"
         },
-        "image": "/redefine.png"
+        "image": "/optimized/redefine.png"
       },
       {
         "id": "5",
@@ -71,7 +71,7 @@
         "links": {
           "live": "https://kta.adrianfinik.sk"
         },
-        "image": "/kta.png"
+        "image": "/optimized/kta.png"
       },
       {
         "id": "6",
@@ -81,7 +81,7 @@
         "links": {
           "live": "https://chlebik.adrianfinik.sk"
         },
-        "image": "/chlebicky.png"
+        "image": "/optimized/chlebicky.png"
       },
       {
         "id": "7",
@@ -91,7 +91,7 @@
         "links": {
           "live": "https://glisten-ai.adrianfinik.sk/"
         },
-        "image": "/glisten.png"
+        "image": "/optimized/glisten.png"
       }
     ]
   },

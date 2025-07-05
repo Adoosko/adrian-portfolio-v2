@@ -97,6 +97,7 @@ export function Footer({ data, nav }: FooterProps) {
                 rel="noopener noreferrer"
                 whileHover={{ x: 4 }}
                 className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={nav.resume}
               >
                 <span>{nav.resume}</span>
                 <ExternalLink size={14} />

@@ -1,5 +1,6 @@
 // src/app/[locale]/layout.tsx
 import ClientProviders from "@/components/ClientProviders";
+import CookieConsentComponent from "@/components/CookieConsent";
 import { routing } from "@/i18n/routing";
 import { boska } from "@/lib/fonts";
 import { hasLocale } from "next-intl";
@@ -91,6 +92,7 @@ export default async function LocaleLayout({
       >
         <ClientProviders locale={locale} messages={messages}>
           {children}
+          <CookieConsentComponent />
         </ClientProviders>
       </body>
     </html>

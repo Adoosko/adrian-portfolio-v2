@@ -67,7 +67,7 @@ export function ProfileImage({ scrollProgress, priority = false }: ProfileImageP
           
           {/* Image */}
           <Image
-            src="/profile.png"
+            src="/optimized/profile.png"
             alt="Adrian Finik"
             width={500}
             height={500}
