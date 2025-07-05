@@ -21,10 +21,7 @@ export default function LanguageSwitcher() {
   const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
 
   const handleLanguageChange = (newLocale: string) => {
-    startTransition(() => {
-      router.replace(pathname, { locale: newLocale });
-      setIsOpen(false);
-    });
+    router.replace(pathname, { locale: newLocale });
   };
 
   return (

@@ -8,8 +8,9 @@ import { useFormStore } from "@/stores/form-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { AlertCircle, Check, Send } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 interface ContactProps {
@@ -29,6 +30,9 @@ interface ContactProps {
       email_invalid: string;
       message_required: string;
     };
+    sent_button: string;
+    toast_success: string;
+    toast_error: string;
   };
 }
 
@@ -59,7 +63,20 @@ export function Contact({ data }: ContactProps) {
     contactForm,
     setContactForm,
     resetContactForm,
+    setToast,
+    toast: formToast,
   } = useFormStore();
+
+  useEffect(() => {
+    if (formToast) {
+      if (formToast.type === 'success') {
+        toast.success(formToast.message);
+      } else if (formToast.type === 'error') {
+        toast.error(formToast.message);
+      }
+      setToast(null);
+    }
+  }, [formToast, setToast]);
 
   const {
     register,
@@ -79,17 +96,32 @@ export function Contact({ data }: ContactProps) {
     setIsSubmitting(true);
     setContactForm(formData);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Form data:", formData);
+    try {
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setIsSuccess(true);
-    reset();
-    resetContactForm();
-    setIsSubmitting(false);
-
-    // Reset success state after 3 seconds
-    setTimeout(() => setIsSuccess(false), 3000);
+      if (response.ok) {
+        setIsSuccess(true);
+        reset();
+        resetContactForm();
+        setToast({ message: data.toast_success, type: "success" });
+      } else {
+        // Handle error
+        console.error('Form submission error');
+        setToast({ message: data.toast_error, type: "error" });
+      }
+    } catch (error) {
+      console.error('Form submission error', error);
+      setToast({ message: data.toast_error, type: "error" });
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setIsSuccess(false), 3000);
+    }
   };
 
   // Container variants
@@ -250,7 +282,7 @@ export function Contact({ data }: ContactProps) {
                           className="flex items-center space-x-2"
                         >
                           <Check size={16} />
-                          <span>Sent!</span>
+                          <span>{data.sent_button}</span>
                         </motion.div>
                       ) : isSubmitting ? (
                         <motion.div

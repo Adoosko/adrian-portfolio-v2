@@ -28,21 +28,7 @@
     "featured": "Doporučený projekt",
     "no_projects": "Nejsou k dispozici žádné doporučené projekty.",
     "projects": [
-      {
-        "id": "1",
-        "title": "Portfolio v2",
-        "description": "Moje osobní portfolio, vytvořené pomocí Next.js, Tailwind CSS a Framer Motion. Je navrženo jako ukázka mých dovedností a platforma pro mé myšlenky.",
-        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-        "links": {
-          "github": "https://github.com/Adoosko/adrian-portfolio-v2",
-          "live": "https://adrianfinik.com"
-        },
-        "image": {
-          "light": "/naformu-black.png",
-          "dark": "/naformu-white.png"
-        },
-        "video": "/ado.mp4"
-      },
+     
       {
         "id": "3",
         "title": "NaFormu",
@@ -65,11 +51,7 @@
         "links": {
           "live": "https://naformu.adrianfinik.sk"
         },
-        "image": {
-          "light": "/naformu-black.png",
-          "dark": "/naformu-white.png"
-        },
-        "video": "/naformu.mp4"
+        "image": "/naformu-white.png"
       },
       {
         "id": "4",
@@ -79,7 +61,7 @@
         "links": {
           "live": "https://redefine.adrianfinik.sk"
         },
-        "video": "/redifine.mp4"
+        "image": "/redefine.png"
       },
       {
         "id": "5",
@@ -89,7 +71,7 @@
         "links": {
           "live": "https://kta.adrianfinik.sk"
         },
-       "video":"/kta.mp4"
+        "image": "/kta.png"
       },
       {
         "id": "6",
@@ -99,7 +81,7 @@
         "links": {
           "live": "https://chlebik.adrianfinik.sk"
         },
-        "video":"chlebicky.mp4"
+        "image": "/chlebicky.png"
       },
       {
         "id": "7",
@@ -109,7 +91,7 @@
         "links": {
           "live": "https://glisten-ai.adrianfinik.sk/"
         },
-        "video": "/glisten.mp4"
+        "image": "/glisten.png"
       }
     ]
   },
@@ -124,6 +106,9 @@
     "message_placeholder": "Vaše zpráva...",
     "send_button": "Odeslat zprávu",
     "sending_button": "Odesílání...",
+    "sent_button": "Odesláno!",
+    "toast_success": "Zpráva byla úspěšně odeslána!",
+    "toast_error": "Nepodařilo se odeslat zprávu.",
     "validation": {
       "name_required": "Jméno musí mít alespoň 2 znaky",
       "email_invalid": "Zadejte prosím platný e-mail",

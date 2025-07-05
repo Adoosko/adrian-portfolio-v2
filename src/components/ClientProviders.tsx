@@ -6,6 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { LenisProvider } from "./LenisProvider";
 import Loader from "./ui/loader";
+import { Toaster } from "./ui/sonner";
 
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 
@@ -39,7 +40,10 @@ export default function ClientProviders({
           enableSystem
           disableTransitionOnChange={false}
         >
-          <LenisProvider>{children}</LenisProvider>
+          <LenisProvider>
+            {children}
+            <Toaster />
+          </LenisProvider>
         </ThemeProvider>
       </NextIntlClientProvider>
 

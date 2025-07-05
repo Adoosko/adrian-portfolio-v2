@@ -8,11 +8,11 @@ import {
   useInView,
   useMotionValue,
   useSpring,
-  useTransform
+  useTransform,
 } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { JetBrains_Mono } from "next/font/google";
 import { useRef } from "react";
+
 interface HeroProps {
   data: {
     greeting: string;
@@ -31,13 +31,6 @@ const easings = {
   smooth: [0.25, 0.46, 0.45, 0.94],
   elastic: [0.175, 0.885, 0.32, 1.275],
 };
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-  weight: ['300', '400', '500'],
-  display: 'swap',
-});
-
 export function Hero({ data }: HeroProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10%" });

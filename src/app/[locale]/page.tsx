@@ -1,10 +1,18 @@
 import { Footer } from "@/components/layout/footer";
 import { Navigation } from "@/components/layout/navigation";
-import { About } from "@/components/sections/about";
-import { Contact } from "@/components/sections/contact";
 import { Hero } from "@/components/sections/hero";
-import { Work } from "@/components/sections/work";
 import { getLocale, getMessages } from "next-intl/server";
+import dynamic from 'next/dynamic';
+
+const About = dynamic(() => import('@/components/sections/about').then(mod => mod.About), {
+  loading: () => <div className="h-screen" />,
+});
+const Work = dynamic(() => import('@/components/sections/work').then(mod => mod.Work), {
+  loading: () => <div className="h-screen" />,
+});
+const Contact = dynamic(() => import('@/components/sections/contact').then(mod => mod.Contact), {
+  loading: () => <div className="h-screen" />,
+});
 
 export default async function HomePage() {
   const locale = await getLocale();
@@ -45,6 +53,9 @@ export default async function HomePage() {
     message_placeholder: messages.Contact.message_placeholder,
     send_button: messages.Contact.send_button,
     sending_button: messages.Contact.sending_button,
+    sent_button: messages.Contact.sent_button,
+    toast_success: messages.Contact.toast_success,
+    toast_error: messages.Contact.toast_error,
     validation: messages.Contact.validation,
   };
 

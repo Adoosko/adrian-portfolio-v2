@@ -28,21 +28,7 @@
     "featured": "Featured Project",
     "no_projects": "No featured projects available.",
     "projects": [
-      {
-        "id": "1",
-        "title": "Portfolio v2",
-        "description": "My personal portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It's designed to be a showcase of my skills and a platform for my thoughts.",
-        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-        "links": {
-          "github": "https://github.com/Adoosko/adrian-portfolio-v2",
-          "live": "https://adrianfinik.com"
-        },
-        "image": {
-          "light": "/naformu-black.png",
-          "dark": "/naformu-white.png"
-        },
-        "video": "/ado.mp4"
-      },
+     
       {
         "id": "3",
         "title": "NaFormu",
@@ -65,11 +51,7 @@
         "links": {
           "live": "https://naformu.adrianfinik.sk"
         },
-        "image": {
-          "light": "/naformu-black.png",
-          "dark": "/naformu-white.png"
-        },
-        "video": "/naformu.mp4"
+        "image": "/naformu-white.png"
       },
       {
         "id": "4",
@@ -79,7 +61,7 @@
         "links": {
           "live": "https://redefine.adrianfinik.sk"
         },
-        "video": "/redifine.mp4"
+        "image": "/redefine.png"
       },
       {
         "id": "5",
@@ -89,7 +71,7 @@
         "links": {
           "live": "https://kta.adrianfinik.sk"
         },
-        "video":"/kta.mp4"
+        "image": "/kta.png"
       },
       {
         "id": "6",
@@ -99,7 +81,7 @@
         "links": {
           "live": "https://chlebik.adrianfinik.sk"
         },
-        "video":"chlebicky.mp4"
+        "image": "/chlebicky.png"
       },
       {
         "id": "7",
@@ -109,7 +91,7 @@
         "links": {
           "live": "https://glisten-ai.adrianfinik.sk/"
         },
-        "video": "/glisten.mp4"
+        "image": "/glisten.png"
       }
     ]
   },
@@ -124,6 +106,9 @@
     "message_placeholder": "Your message...",
     "send_button": "Send Message",
     "sending_button": "Sending...",
+    "sent_button": "Sent!",
+    "toast_success": "Message sent successfully!",
+    "toast_error": "Failed to send message.",
     "validation": {
       "name_required": "Name must be at least 2 characters",
       "email_invalid": "Please enter a valid email",

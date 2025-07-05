@@ -1,14 +1,16 @@
 "use client";
 
 import { motion, MotionValue, useSpring, useTransform } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
 
 interface ProfileImageProps {
   image?: any;
   scrollProgress: MotionValue<number>;
+  priority?: boolean;
 }
 
-export function ProfileImage({ scrollProgress }: ProfileImageProps) {
+export function ProfileImage({ scrollProgress, priority = false }: ProfileImageProps) {
   const [isHovered, setIsHovered] = useState(false);
   
   // Smooth reveal animations
@@ -44,13 +46,13 @@ export function ProfileImage({ scrollProgress }: ProfileImageProps) {
         className="relative"
       >
         {/* Main image container */}
-        <motion.div 
+        <motion.div
           className="aspect-square rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden relative"
-          whileHover={{ 
+          whileHover={{
             scale: 1.02,
             rotateY: 5,
           }}
-          transition={{ 
+          transition={{
             duration: 0.4,
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
@@ -64,12 +66,13 @@ export function ProfileImage({ scrollProgress }: ProfileImageProps) {
           />
           
           {/* Image */}
-          <motion.img
+          <Image
             src="/profile.png"
             alt="Adrian Finik"
+            width={500}
+            height={500}
             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.5 }}
+            priority={priority}
           />
           
           {/* Overlay gradient */}

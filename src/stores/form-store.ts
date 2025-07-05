@@ -22,6 +22,13 @@ interface FormState {
   // Theme preference (backup to next-themes)
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+
+  // Toast state
+  toast: {
+    message: string;
+    type: "success" | "error" | "info";
+  } | null;
+  setToast: (toast: FormState["toast"]) => void;
 }
 
 export const useFormStore = create(
@@ -57,6 +64,10 @@ export const useFormStore = create(
       // Theme
       isDarkMode: false,
       toggleDarkMode: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
+
+      // Toast
+      toast: null,
+      setToast: (toast) => set({ toast }),
     }),
     {
       name: "portfolio-storage",

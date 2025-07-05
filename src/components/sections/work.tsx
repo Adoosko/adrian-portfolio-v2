@@ -4,6 +4,7 @@
 import { motion, useMotionValue, useScroll, useSpring } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { EffectCards, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -23,10 +24,7 @@ interface Project {
     live?: string;
     demo?: string;
   };
-  image?: {
-    light: string;
-    dark: string;
-  };
+  image?: string;
   video?: string;
 }
 
@@ -278,19 +276,12 @@ function ProjectCard({ project, featuredText, theme }: {
     >
       {/* Project Image */}
       <div className="aspect-video bg-muted relative overflow-hidden">
-        {project.video ? (
-          <video
-            src={project.video}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          />
-        ) : project.image ? (
-          <img
-            src={theme === "dark" ? project.image.dark : project.image.light}
+        {project.image ? (
+          <Image
+            src={project.image}
             alt={project.title}
+            width={500}
+            height={281}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -384,7 +375,7 @@ function DesktopProjectGallery({ projects, scrollProgress, featuredText, mouseX,
           key={project.id}
           initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "0px" }}
           transition={{ 
             duration: 0.8, 
             delay: index * 0.2,
@@ -415,23 +406,12 @@ function DesktopProjectGallery({ projects, scrollProgress, featuredText, mouseX,
               transition={{ duration: 0.4, ease: customEasing.smooth }}
             >
               <div className="aspect-video bg-muted rounded-lg border border-border overflow-hidden relative">
-                {project.video ? (
-                  <video
-                    src={project.video}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover"
-                  />
-                ) : project.image ? (
-                  <img
-                    src={
-                      theme === "dark"
-                        ? project.image.dark
-                        : project.image.light
-                    }
+                {project.image ? (
+                  <Image
+                    src={project.image}
                     alt={project.title}
+                    width={800}
+                    height={450}
                     className="w-full h-full object-cover"
                   />
                 ) : (
