@@ -138,7 +138,8 @@ export function Navigation({ data }: NavigationProps) {
         duration: 1.2,
         ease: customEasing.dramatic,
         staggerChildren: 0.1,
-        delayChildren: 0,
+        delayChildren: 0.5,
+        delay: 1.4,
       },
     },
   };
