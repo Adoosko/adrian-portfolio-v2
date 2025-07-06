@@ -13,12 +13,14 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
+  fallback: ["monospace"],
 });
 
 // src/app/[locale]/layout.tsx

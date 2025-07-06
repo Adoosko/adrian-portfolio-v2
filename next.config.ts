@@ -2,7 +2,7 @@ import { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
  
 const nextConfig: NextConfig = {
-  compress: false,
+  compress: true,
 };
  
 const withNextIntl = createNextIntlPlugin();

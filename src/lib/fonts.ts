@@ -6,4 +6,5 @@ export const boska = localFont({
   variable: '--font-boska',
   display: 'swap',
   preload: true,
+  fallback: ["serif"],
 });
