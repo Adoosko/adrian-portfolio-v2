@@ -6,12 +6,11 @@ import { ExternalLink, Github } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { EffectCards, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/effect-cards';
 import 'swiper/css/pagination';
 
 interface Project {
@@ -232,21 +231,13 @@ function MobileProjectSlider({ projects, featuredText, currentProject, setCurren
   return (
     <div className="relative">
       <Swiper
-        effect={'cards'}
-        grabCursor={true}
-        modules={[EffectCards, Pagination]}
+        modules={[Pagination]}
         pagination={{
           clickable: true,
           bulletClass: 'swiper-pagination-bullet !bg-muted-foreground/30',
           bulletActiveClass: 'swiper-pagination-bullet-active !bg-foreground',
         }}
         className="w-[90vw] sm:max-w-sm mx-auto"
-        cardsEffect={{
-          perSlideOffset: 8,
-          perSlideRotate: 2,
-          rotate: true,
-          slideShadows: false,
-        }}
       >
         {projects.map((project, index) => (
           <SwiperSlide key={project.id}>

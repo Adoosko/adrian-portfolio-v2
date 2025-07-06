@@ -9,18 +9,16 @@ function isValidLocale(locale: any): locale is Locale {
   return locales.includes(locale);
 }
  
-export default getRequestConfig(async ({locale}) => {
-  console.log('Current locale:', locale);
+
+export default getRequestConfig(async ({ locale }) => {
+  // Validate that the incoming `locale` parameter is valid
   if (!isValidLocale(locale)) {
     notFound();
   }
- 
-  const messages = (await import(`../messages/${locale}.json`)).default;
-  console.log('Loaded messages:', messages);
- 
+
   return {
     locale,
-    messages,
-    timeZone: 'Europe/Bratislava'
+    messages: (await import(`../messages/${locale}.json`)).default,
+    timeZone: 'Europe/Bratislava',
   };
 });

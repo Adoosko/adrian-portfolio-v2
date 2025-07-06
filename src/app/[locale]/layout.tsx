@@ -4,7 +4,7 @@ import CookieConsentComponent from "@/components/CookieConsent";
 import { routing } from "@/i18n/routing";
 import { boska } from "@/lib/fonts";
 import { hasLocale } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import './globals.css';
@@ -21,23 +21,30 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+// src/app/[locale]/layout.tsx
+
+export function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'cs' }, { locale: 'sk' }];
+}
+
 // Definícia vlastných typov pre async params
 interface LayoutProps {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{locale:string}>;
 }
 
 interface MetadataProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{locale:string}>;
 }
 
 export async function generateMetadata({ params }: MetadataProps) {
-  const { locale } = await params; // await je kľúčový
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Hero' });
   const title = t('title');
   const description = t('description');
 
   return {
+    metadataBase: new URL('https://adrianfinik.sk'),
     title,
     description,
     openGraph: {
@@ -75,13 +82,13 @@ export default async function LocaleLayout({
   children,
   params,
 }: LayoutProps) {
-  const { locale } = await params; // await je kľúčový
+  const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
-  const messages = await getMessages();
+  const messages = (await import(`../../../messages/${locale}.json`)).default;
   const t = await getTranslations({ locale, namespace: "Hero" });
 
   return (

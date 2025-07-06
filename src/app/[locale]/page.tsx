@@ -1,24 +1,17 @@
 import { Footer } from "@/components/layout/footer";
 import { Navigation } from "@/components/layout/navigation";
+import { About } from '@/components/sections/about';
+import { Contact } from '@/components/sections/contact';
 import { Hero } from "@/components/sections/hero";
-import { getLocale, getMessages } from "next-intl/server";
-import dynamic from 'next/dynamic';
+import { Work } from '@/components/sections/work';
 
-const About = dynamic(() => import('@/components/sections/about').then(mod => mod.About), {
-  loading: () => <div className="h-screen" />,
-});
-const Work = dynamic(() => import('@/components/sections/work').then(mod => mod.Work), {
-  loading: () => <div className="h-screen" />,
-});
-const Contact = dynamic(() => import('@/components/sections/contact').then(mod => mod.Contact), {
-  loading: () => <div className="h-screen" />,
-});
+interface HomePageProps {
+  params: Promise<{locale:string}>;
+}
 
-export default async function HomePage() {
-  const locale = await getLocale();
-  const messages = await getMessages();
-
-  // ✅ Konzistentný prístup cez messages objekt
+export default async function HomePage({ params }: HomePageProps) {
+  const { locale } = await params;
+  const messages = (await import(`../../../messages/${locale}.json`)).default;
   const heroData = {
     greeting: messages.Hero.greeting,
     title: messages.Hero.title,
