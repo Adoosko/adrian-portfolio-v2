@@ -44,7 +44,7 @@ const customEasing = {
   elastic: [0.175, 0.885, 0.32, 1.275],
 };
 
-export function Work({ data }: WorkProps) {
+export default function Work({ data }: WorkProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [currentProject, setCurrentProject] = useState(0);
