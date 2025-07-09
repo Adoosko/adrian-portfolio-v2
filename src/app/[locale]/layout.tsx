@@ -8,6 +8,9 @@ import { getTranslations } from "next-intl/server";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import './globals.css';
+import enMessages from '../../../messages/en.json';
+import csMessages from '../../../messages/cs.json';
+import skMessages from '../../../messages/sk.json';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,6 +25,12 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
   fallback: ["monospace"],
 });
+
+const messagesMap: Record<string, any> = {
+  en: enMessages,
+  cs: csMessages,
+  sk: skMessages,
+};
 
 // src/app/[locale]/layout.tsx
 
@@ -90,7 +99,7 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = (await import(`../../../messages/${locale}.json`)).default;
+  const messages = messagesMap[locale] || enMessages;
   const t = await getTranslations({ locale, namespace: "Hero" });
 
   return (

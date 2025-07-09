@@ -1,6 +1,9 @@
 // @ts-ignore: No types for next/dynamic
 import dynamic from 'next/dynamic';
 import { Hero } from "@/components/sections/hero";
+import enMessages from '../../../messages/en.json';
+import csMessages from '../../../messages/cs.json';
+import skMessages from '../../../messages/sk.json';
 
 const Navigation = dynamic(() => import('@/components/layout/navigation'));
 const About = dynamic(() => import('@/components/sections/about'));
@@ -8,13 +11,19 @@ const Work = dynamic(() => import('@/components/sections/work'));
 const Contact = dynamic(() => import('@/components/sections/contact'));
 const Footer = dynamic(() => import('@/components/layout/footer'));
 
+const messagesMap: Record<string, any> = {
+  en: enMessages,
+  cs: csMessages,
+  sk: skMessages,
+};
+
 interface HomePageProps {
   params: Promise<{locale:string}>;
 }
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
-  const messages = (await import(`../../../messages/${locale}.json`)).default;
+  const messages = messagesMap[locale] || enMessages;
   const heroData = {
     greeting: messages.Hero.greeting,
     title: messages.Hero.title,
