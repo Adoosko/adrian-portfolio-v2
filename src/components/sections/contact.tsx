@@ -43,7 +43,7 @@ const customEasing = {
   gentle: [0.4, 0, 0.2, 1],
 };
 
-export function Contact({ data }: ContactProps) {
+export default function Contact({ data }: ContactProps) {
   const contactSchema = z.object({
     name: z.string().min(2, data.validation.name_required),
     email: z.string().email(data.validation.email_invalid),

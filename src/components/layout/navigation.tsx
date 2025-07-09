@@ -37,7 +37,7 @@ const customEasing = {
   spring: { type: "spring", stiffness: 300, damping: 30 },
 };
 
-export function Navigation({ data }: NavigationProps) {
+export default function Navigation({ data }: NavigationProps) {
   const navItems = [
     { name: data.about, href: "#about", index: "01" },
     { name: data.work, href: "#work", index: "02" },

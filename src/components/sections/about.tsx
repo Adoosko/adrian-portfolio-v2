@@ -17,7 +17,7 @@ interface AboutProps {
   };
 }
 
-export function About({ data }: AboutProps) {
+export default function About({ data }: AboutProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,

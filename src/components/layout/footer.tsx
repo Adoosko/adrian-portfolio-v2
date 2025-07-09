@@ -39,7 +39,7 @@ interface FooterProps {
   };
 }
 
-export function Footer({ data, nav }: FooterProps) {
+export default function Footer({ data, nav }: FooterProps) {
   const navLinks = [
     { name: nav.about, href: "#about" },
     { name: nav.work, href: "#work" },
