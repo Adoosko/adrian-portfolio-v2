@@ -1,9 +1,12 @@
-import { Footer } from "@/components/layout/footer";
-import { Navigation } from "@/components/layout/navigation";
-import { About } from '@/components/sections/about';
-import { Contact } from '@/components/sections/contact';
+// @ts-ignore: No types for next/dynamic
+import dynamic from 'next/dynamic';
 import { Hero } from "@/components/sections/hero";
-import { Work } from '@/components/sections/work';
+
+const Navigation = dynamic(() => import('@/components/layout/navigation'));
+const About = dynamic(() => import('@/components/sections/about'));
+const Work = dynamic(() => import('@/components/sections/work'));
+const Contact = dynamic(() => import('@/components/sections/contact'));
+const Footer = dynamic(() => import('@/components/layout/footer'));
 
 interface HomePageProps {
   params: Promise<{locale:string}>;
