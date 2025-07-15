@@ -13,14 +13,15 @@
     "description": "Jmenuji se Adrian Finik a pocházím z Oravy. Moje cesta programováním začala již v prvním ročníku střední školy, kdy jsem se ze zvědavosti pustil do základů HTML, CSS a JavaScriptu. Každý nový řádek kódu mě posouval dál a brzy jsem objevil pokročilejší technologie, jako React a Next.js, které mě naprosto pohltily. Dnes, v roce 2025, je Next.js mou hlavní platformou, ve které denně vyvíjím moderní weby a jsem s ní maximálně spokojený.\n\nMoje zkušenosti již nespočívají jen ve školních projektech – pracoval jsem na reálných zadáních, kde jsem si vyzkoušel i full stack vývoj a ověřil si, že moderní technologie, jako Prisma ORM či animace s Framer Motion, mají v dnešním světě své pevné místo. Kromě práce na klientské straně webu rád experimentuji s vlastními projekty, kde se nebojím zkoušet nové trendy a posouvat své hranice.\n\nVěřím, že žijeme v roce 2025 a je čas používat technologie, které tento rok definuje. Snažím se držet krok s dobou, inovovat a vytvářet weby, které jsou nejen funkční, ale také vizuálně atraktivní a moderní. Protože jen tak můžeme posouvat digitální svět vpřed.",
     "tech_list_intro": "Zde je několik technologií, se kterými v poslední době pracuji:",
     "technologies": [
-      "JavaScript (ES6+)",
-      "TypeScript",
-      "React",
-      "Next.js",
-      "Node.js",
-      "Tailwind CSS",
-      "Framer Motion",
-      "PostgreSQL"
+      { "name": "JavaScript (ES6+)", "logo": "/optimized/js.png" },
+      { "name": "TypeScript", "logo": "/optimized/ts.png" },
+      { "name": "React", "logo": "/optimized/react.png" },
+      { "name": "Next.js", "logo": "/optimized/nextjs.svg" },
+      { "name": "Node.js", "logo": "/optimized/nodejs.png" },
+      { "name": "Tailwind CSS", "logo": "/optimized/tailwind.png" },
+      { "name": "PostgreSQL", "logo": "/optimized/pg.png" },
+      { "name": "Framer Motion", "logo": "/optimized/framer.png" },
+      { "name": "Vercel", "logo": "/optimized/vercel.svg" }
     ]
   },
   "Work": {
@@ -131,7 +132,31 @@
     "back_to_top": "↑ Zpět nahoru"
   },
   "CookieConsent": {
-    "message": "Tento web používá soubory cookie ke zlepšení uživatelského zážitku.",
-    "buttonText": "Souhlasím"
+    "title": "Cookies",
+    "message": "Tento web používá soubory cookie ke zlepšení uživatelského zážitku. Kliknutím na \"Přijmout vše\" souhlasíte s používáním všech souborů cookie.",
+    "acceptAll": "Přijmout vše",
+    "declineAll": "Odmítnout vše",
+    "preferences": "Předvolby",
+    "preferencesModal": {
+      "title": "Předvolby souborů cookie",
+      "save": "Uložit předvolby",
+      "cancel": "Zrušit",
+      "necessary": {
+        "title": "Nezbytné soubory cookie",
+        "description": "Tyto soubory cookie jsou nezbytné pro správné fungování webových stránek a nelze je zakázat."
+      },
+      "analytics": {
+        "title": "Analytické soubory cookie",
+        "description": "Tyto soubory cookie nám pomáhají porozumět, jak návštěvníci používají naše webové stránky."
+      },
+      "marketing": {
+        "title": "Marketingové soubory cookie",
+        "description": "Tyto soubory cookie se používají k zobrazování relevantních reklam a marketingových kampaní."
+      },
+      "preferences": {
+        "title": "Funkční soubory cookie",
+        "description": "Tyto soubory cookie umožňují webovým stránkám zapamatovat si vaše preference a nastavení."
+      }
+    }
   }
 }

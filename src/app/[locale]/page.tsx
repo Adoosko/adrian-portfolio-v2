@@ -1,29 +1,42 @@
-// @ts-ignore: No types for next/dynamic
-import dynamic from 'next/dynamic';
+// app/[locale]/page.tsx
+import Footer from "@/components/layout/footer";
+import Navigation from "@/components/layout/navigation";
+import About from "@/components/sections/about";
 import { Hero } from "@/components/sections/hero";
-import enMessages from '../../../messages/en.json';
-import csMessages from '../../../messages/cs.json';
-import skMessages from '../../../messages/sk.json';
 
-const Navigation = dynamic(() => import('@/components/layout/navigation'));
-const About = dynamic(() => import('@/components/sections/about'));
-const Work = dynamic(() => import('@/components/sections/work'));
-const Contact = dynamic(() => import('@/components/sections/contact'));
-const Footer = dynamic(() => import('@/components/layout/footer'));
 
-const messagesMap: Record<string, any> = {
-  en: enMessages,
-  cs: csMessages,
-  sk: skMessages,
-};
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+
+// Dynamicky importujte len komponenty, ktoré nie sú kritické pre first paint
+const Work = dynamic(() => import('@/components/sections/work'), {
+  loading: () => <div className="h-96 animate-pulse bg-gray-100 rounded-lg" />
+});
+
+const Contact = dynamic(() => import('@/components/sections/contact'), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100 rounded-lg" />
+});
+
+// Async import pre správne načítanie lokalizačných súborov
+async function getMessages(locale: string) {
+  try {
+    const messages = await import(`../../../messages/${locale}.json`);
+    return messages.default;
+  } catch {
+    const fallback = await import('../../../messages/en.json');
+    return fallback.default;
+  }
+}
 
 interface HomePageProps {
-  params: Promise<{locale:string}>;
+  params: Promise<{locale: string}>;
 }
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
-  const messages = messagesMap[locale] || enMessages;
+  const messages = await getMessages(locale);
+  
+  // Optimalizácia: Vytvorte data objekty len pre tie sekcie, ktoré ich potrebujú
   const heroData = {
     greeting: messages.Hero.greeting,
     title: messages.Hero.title,
@@ -38,30 +51,6 @@ export default async function HomePage({ params }: HomePageProps) {
     description: messages.About.description,
     technologies: messages.About.technologies,
     tech_list_intro: messages.About.tech_list_intro,
-  };
-
-  const workData = {
-    title: messages.Work.title,
-    featured: messages.Work.featured,
-    no_projects: messages.Work.no_projects,
-    projects: messages.Work.projects,
-  };
-
-  const contactData = {
-    title: messages.Contact.title,
-    description: messages.Contact.description,
-    name: messages.Contact.name,
-    name_placeholder: messages.Contact.name_placeholder,
-    email: messages.Contact.email,
-    email_placeholder: messages.Contact.email_placeholder,
-    message: messages.Contact.message,
-    message_placeholder: messages.Contact.message_placeholder,
-    send_button: messages.Contact.send_button,
-    sending_button: messages.Contact.sending_button,
-    sent_button: messages.Contact.sent_button,
-    toast_success: messages.Contact.toast_success,
-    toast_error: messages.Contact.toast_error,
-    validation: messages.Contact.validation,
   };
 
   const navigationData = {
@@ -86,8 +75,35 @@ export default async function HomePage({ params }: HomePageProps) {
       <Navigation data={navigationData} />
       <Hero data={heroData} />
       <About data={aboutData} />
-      <Work data={workData} />
-      <Contact data={contactData} />
+      
+      <Suspense fallback={<div className="h-96 animate-pulse bg-gray-100 rounded-lg" />}>
+        <Work data={{
+          title: messages.Work.title,
+          featured: messages.Work.featured,
+          no_projects: messages.Work.no_projects,
+          projects: messages.Work.projects,
+        }} />
+      </Suspense>
+      
+      <Suspense fallback={<div className="h-64 animate-pulse bg-gray-100 rounded-lg" />}>
+        <Contact data={{
+          title: messages.Contact.title,
+          description: messages.Contact.description,
+          name: messages.Contact.name,
+          name_placeholder: messages.Contact.name_placeholder,
+          email: messages.Contact.email,
+          email_placeholder: messages.Contact.email_placeholder,
+          message: messages.Contact.message,
+          message_placeholder: messages.Contact.message_placeholder,
+          send_button: messages.Contact.send_button,
+          sending_button: messages.Contact.sending_button,
+          sent_button: messages.Contact.sent_button,
+          toast_success: messages.Contact.toast_success,
+          toast_error: messages.Contact.toast_error,
+          validation: messages.Contact.validation,
+        }} />
+      </Suspense>
+      
       <Footer data={footerData} nav={navigationData} />
     </main>
   );
