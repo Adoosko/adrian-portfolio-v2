@@ -2,12 +2,30 @@
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { useAnimationStore } from "@/stores/animation-store";
-import { useEffect } from "react";
-import { CustomCursor } from "./CustomCursor";
-import { LenisProvider } from "./LenisProvider";
-import { Toaster } from "./ui/sonner";
-
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
+import dynamic from "next/dynamic";
+import { useEffect } from "react";
+
+const Toaster = dynamic(
+  () => import("./ui/sonner").then((m) => m.Toaster),
+  {
+    ssr: false,
+  },
+);
+
+const CustomCursor = dynamic(
+  () => import("./CustomCursor").then((m) => m.CustomCursor),
+  {
+    ssr: false,
+  },
+);
+
+const LenisProvider = dynamic(
+  () => import("./LenisProvider").then((m) => m.LenisProvider),
+  {
+    ssr: false,
+  },
+);
 
 export default function ClientProviders({
   children,
