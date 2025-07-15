@@ -338,6 +338,7 @@ function ProjectCard({ project, featuredText, theme }: {
               whileTap={{ scale: 0.9 }}
               className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors"
             >
+            Link
               <ExternalLink size={16} />
             </motion.a>
           )}
