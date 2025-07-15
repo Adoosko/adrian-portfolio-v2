@@ -13,14 +13,15 @@
     "description": "Volám sa Adrian Finik a pochádzam z Oravy. Moja cesta programovaním sa začala už v prvom ročníku strednej školy, keď som sa zo zvedavosti pustil do základov HTML, CSS a JavaScriptu. Každý nový riadok kódu ma posúval ďalej a čoskoro som objavil pokročilejšie technológie, ako React a Next.js, ktoré ma úplne pohltili. Dnes, v roku 2025, je Next.js mojou hlavnou platformou, v ktorej denne vyvíjam moderné weby a som s ňou maximálne spokojný.\n\nMoje skúsenosti už nespočívajú len v školských projektoch – pracoval som na reálnych zadaniach, kde som si vyskúšal aj full stack vývoj a overil si, že moderné technológie, ako Prisma ORM či animácie s Framer Motion, majú v dnešnom svete svoje pevné miesto. Okrem práce na klientskej strane webu rád experimentujem s vlastnými projektmi, kde sa nebojím skúšať nové trendy a posúvať svoje hranice.\n\nVerím, že žijeme v roku 2025 a je čas používať technológie, ktoré tento rok definuje. Snažím sa držať krok s dobou, inovovať a vytvárať weby, ktoré sú nielen funkčné, ale aj vizuálne atraktívne a moderné. Pretože len tak môžeme posúvať digitálny svet vpred.",
     "tech_list_intro": "Tu je niekoľko technológií, s ktorými v poslednej dobe pracujem:",
     "technologies": [
-      "JavaScript (ES6+)",
-      "TypeScript",
-      "React",
-      "Next.js",
-      "Node.js",
-      "Tailwind CSS",
-      "Framer Motion",
-      "PostgreSQL"
+      { "name": "JavaScript (ES6+)", "logo": "/optimized/js.png" },
+      { "name": "TypeScript", "logo": "/optimized/ts.png" },
+      { "name": "React", "logo": "/optimized/react.png" },
+      { "name": "Next.js", "logo": "/optimized/nextjs.svg" },
+      { "name": "Node.js", "logo": "/optimized/nodejs.png" },
+      { "name": "Tailwind CSS", "logo": "/optimized/tailwind.png" },
+      { "name": "PostgreSQL", "logo": "/optimized/pg.png" },
+      { "name": "Framer Motion", "logo": "/optimized/framer.png" },
+      { "name": "Vercel", "logo": "/optimized/vercel.svg" }
     ]
   },
   "Work": {
@@ -130,8 +131,32 @@
     "built_with": "Vytvorené s Next.js & Tailwind CSS",
     "back_to_top": "↑ Späť na vrch"
   },
- "CookieConsent": {
-   "message": "Táto webová stránka používa súbory cookie na zlepšenie používateľského zážitku.",
-   "buttonText": "Súhlasím"
- }
+  "CookieConsent": {
+    "title": "Súbory cookie",
+    "message": "Táto webová stránka používa súbory cookie na zlepšenie používateľskej skúsenosti. Kliknutím na \"Prijať všetky\" súhlasíte s používaním všetkých súborov cookie.",
+    "acceptAll": "Prijať všetky",
+    "declineAll": "Odmietnuť všetky",
+    "preferences": "Nastavenia",
+    "preferencesModal": {
+      "title": "Nastavenia súborov cookie",
+      "save": "Uložiť nastavenia",
+      "cancel": "Zrušiť",
+      "necessary": {
+        "title": "Nevyhnutné súbory cookie",
+        "description": "Tieto súbory cookie sú potrebné pre správne fungovanie webovej stránky a nie je možné ich deaktivovať."
+      },
+      "analytics": {
+        "title": "Analytické súbory cookie",
+        "description": "Tieto súbory cookie nám pomáhajú pochopiť, ako návštevníci používajú našu webovú stránku."
+      },
+      "marketing": {
+        "title": "Marketingové súbory cookie",
+        "description": "Tieto súbory cookie sa používajú na zobrazovanie relevantných reklám a marketingových kampaní."
+      },
+      "preferences": {
+        "title": "Funkčné súbory cookie",
+        "description": "Tieto súbory cookie umožňujú webovej stránke zapamätať si vaše preferencie a nastavenia."
+      }
+    }
+  }
 }
