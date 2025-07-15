@@ -108,6 +108,7 @@ const ProjectCard = memo<{
             rel="noopener noreferrer"
             className="p-2 bg-muted rounded hover:bg-muted/80 transition-colors"
           >
+            Link
             <ExternalLink size={16} />
           </a>
         )}
