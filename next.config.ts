@@ -13,22 +13,40 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   
-  // 🔥 KRITICKÉ OPTIMALIZÁCIE
   experimental: {
-   
+    ppr: 'incremental',
+    useCache: true, // Pridajte tento flag
+    // 🔥 Client-side optimalizácie
+    clientSegmentCache: true,
+    browserDebugInfoInTerminal: true,
+    
+    // 🔥 Developer experience
+    devtoolSegmentExplorer: true,
+    
+    // 🔥 Global 404 handling
+    globalNotFound: true,
+    
+    // 🔥 Turbopack optimalizácie
+    turbopackPersistentCaching: true,
+    
+    // 🔥 Bundle optimalizácie
     optimizeCss: true,
-    optimizePackageImports: [
-      'framer-motion',
-      'lucide-react',
-      'next-intl'
-    ],
+   
+    
+    // 🔥 Render stratégie
+    reactCompiler: true,
+    
+    // 🔥 Memory optimalizácie
+    memoryBasedWorkersCount: true,
   },
   
-  // Bundle optimization
+  // Webpack s advanced optimalizáciami
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
+        maxInitialRequests: 25,
+        maxAsyncRequests: 25,
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
@@ -40,18 +58,50 @@ const nextConfig: NextConfig = {
             name: 'framer-motion',
             priority: 20,
           },
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            name: 'react',
+            priority: 30,
+          },
         },
       };
     }
+    
+    // Fallback pre experimental features
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    };
+    
     return config;
+  },
+  
+  // Headers pre performance
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+        ],
+      },
+    ];
   },
 };
 
 const withNextIntl = createNextIntlPlugin();
-const plugins = [withNextIntl];
 
-function composePlugins(config: NextConfig, plugins: any[]): NextConfig {
-  return plugins.reduce((acc: NextConfig, plugin: any) => plugin(acc), config);
-}
-
-export default composePlugins(nextConfig, plugins);
+export default withNextIntl(nextConfig);
