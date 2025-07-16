@@ -314,21 +314,10 @@ const useDeviceCapabilities = () => {
 export const Hero = memo<HeroProps>(({ data }) => {
   const animateHero = useAnimationStore((state) => state.animateHero);
   const { elementRef, isVisible } = useIntersectionObserver();
-  const deviceCapabilities = useDeviceCapabilities();
+  const { isMobile, isLowEnd, reduceMotion } = useDeviceCapabilities();
 
-  // Conditional features
-  const enableMouseTracking = useMemo(() => 
-    !deviceCapabilities.isMobile && 
-    !deviceCapabilities.reduceMotion && 
-    !deviceCapabilities.isLowEnd,
-    [deviceCapabilities]
-  );
-
-  const enableSparkles = useMemo(() => 
-    !deviceCapabilities.reduceMotion && 
-    !deviceCapabilities.isLowEnd,
-    [deviceCapabilities]
-  );
+  const enableMouseTracking = !isMobile && !reduceMotion && !isLowEnd;
+  const enableSparkles = !reduceMotion && !isLowEnd;
 
   const {
     containerRef,
@@ -338,14 +327,9 @@ export const Hero = memo<HeroProps>(({ data }) => {
     handleMouseLeave,
   } = useMouseTracking(enableMouseTracking);
 
-  // Memoized variants
-  const variants = useMemo(() => 
-    createMobileVariants(deviceCapabilities.isMobile), 
-    [deviceCapabilities.isMobile]
-  );
+  const variants = useMemo(() => createMobileVariants(isMobile), [isMobile]);
 
-  // Transform style s conditional application
-  const transformStyle = useMemo(() => 
+  const transformStyle = useMemo(() =>
     enableMouseTracking ? {
       rotateX,
       rotateY,
@@ -361,7 +345,9 @@ export const Hero = memo<HeroProps>(({ data }) => {
       <m.section
         ref={(el) => {
           elementRef.current = el;
-          containerRef.current = el;
+          if (enableMouseTracking) {
+            containerRef.current = el;
+          }
         }}
         variants={variants}
         initial="hidden"
@@ -376,23 +362,20 @@ export const Hero = memo<HeroProps>(({ data }) => {
         role="banner"
         aria-label="Hero section"
       >
-        <m.div 
+        <m.div
           className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl relative"
           style={transformStyle}
         >
           <div className="w-full lg:w-1/2 text-center lg:text-left lg:pr-16">
-            {/* Greeting s sparkles */}
             <m.div
               variants={variants}
               className="flex items-center justify-center lg:justify-start space-x-3 mb-6 lg:mb-8"
               role="presentation"
             >
               <AnimatedSparkle color="#3b82f6" delay={0} enabled={enableSparkles} />
-              <m.p 
+              <m.p
                 className="text-muted-foreground text-sm sm:text-base lg:text-lg tracking-wider"
-                animate={!deviceCapabilities.reduceMotion ? {
-                  opacity: [0.7, 1, 0.7],
-                } : {}}
+                animate={!reduceMotion ? { opacity: [0.7, 1, 0.7] } : {}}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
@@ -404,7 +387,6 @@ export const Hero = memo<HeroProps>(({ data }) => {
               <AnimatedSparkle color="#a855f7" delay={0.1} enabled={enableSparkles} />
             </m.div>
 
-            {/* Main Title - LCP optimalizovaný */}
             <m.h1
               variants={variants}
               className="text-3xl sm:text-4xl lg:text-7xl font-serif text-foreground mb-4 lg:mb-6 leading-tight"
@@ -416,7 +398,6 @@ export const Hero = memo<HeroProps>(({ data }) => {
               {data.title}
             </m.h1>
 
-            {/* Subtitle */}
             <m.h2
               variants={variants}
               className="text-xl sm:text-2xl lg:text-5xl font-bold text-muted-foreground mb-6 lg:mb-8 leading-tight"
@@ -424,7 +405,6 @@ export const Hero = memo<HeroProps>(({ data }) => {
               {data.subtitle}
             </m.h2>
 
-            {/* Description */}
             <m.p
               variants={variants}
               className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-md mx-auto lg:mx-0 text-center lg:text-left mb-8 lg:mb-12 leading-relaxed"
@@ -432,8 +412,7 @@ export const Hero = memo<HeroProps>(({ data }) => {
               {data.description}
             </m.p>
 
-            {/* CTA Buttons */}
-            <m.div 
+            <m.div
               variants={variants}
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center lg:items-start lg:justify-start"
             >
@@ -442,16 +421,16 @@ export const Hero = memo<HeroProps>(({ data }) => {
                 size="lg"
                 targetId="work"
                 className="w-full sm:w-auto font-mono group relative overflow-hidden"
-                isMobile={deviceCapabilities.isMobile}
+                isMobile={isMobile}
               >
                 <m.span
                   className="relative z-10 flex items-center justify-center space-x-2"
-                  whileHover={!deviceCapabilities.isMobile ? { x: -1 } : undefined}
+                  whileHover={!isMobile ? { x: -1 } : undefined}
                   transition={{ duration: 0.15 }}
                 >
                   <span>{data.ctaText}</span>
                   <m.div
-                    animate={!deviceCapabilities.reduceMotion ? { x: [0, 2, 0] } : {}}
+                    animate={!reduceMotion ? { x: [0, 2, 0] } : {}}
                     transition={{
                       duration: 2,
                       repeat: Infinity,
@@ -464,7 +443,7 @@ export const Hero = memo<HeroProps>(({ data }) => {
                 <m.div
                   className="absolute inset-0 bg-primary/10"
                   initial={{ x: '-100%' }}
-                  whileHover={!deviceCapabilities.isMobile ? { x: 0 } : undefined}
+                  whileHover={!isMobile ? { x: 0 } : undefined}
                   transition={{ duration: 0.25 }}
                 />
               </ScrollButton>
@@ -474,10 +453,10 @@ export const Hero = memo<HeroProps>(({ data }) => {
                 size="lg"
                 targetId="contact"
                 className="w-full sm:w-auto font-mono relative overflow-hidden"
-                isMobile={deviceCapabilities.isMobile}
+                isMobile={isMobile}
               >
                 <m.span
-                  whileHover={!deviceCapabilities.isMobile ? { scale: 1.01 } : undefined}
+                  whileHover={!isMobile ? { scale: 1.01 } : undefined}
                   transition={{ duration: 0.15 }}
                 >
                   {data.cta2Text}

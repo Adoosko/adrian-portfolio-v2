@@ -1,4 +1,3 @@
-//@ts-nocheck
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -183,7 +182,7 @@ const FormField = memo<{
       </m.div>
 
       <AnimatePresence>
-        {hasError && (
+        {error && (
           <m.div
             id={`${name}-error`}
             initial={{ opacity: 0, y: -10 }}
@@ -300,7 +299,7 @@ const MessageField = memo<{
       </m.div>
 
       <AnimatePresence>
-        {hasError && (
+        {error && (
           <m.div
             id="message-error"
             initial={{ opacity: 0, y: -10 }}

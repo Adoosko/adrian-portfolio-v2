@@ -5,6 +5,7 @@ import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import dynamic from 'next/dynamic';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import './globals.css';
@@ -40,7 +41,13 @@ const ClientProviders = dynamic(
   }
 );
 
-import { DynamicClientOnlyWrapper } from '@/components/DynamicClientOnlyWrapper';
+const ClientOnlyWrapperProvider = dynamic(
+  () => import('@/components/ClientOnlyWrapperProvider'),
+  { 
+    loading: () => null,
+    
+  }
+);
 
 // Advanced SEO message loader
 async function getMessages(locale: string) {
@@ -62,15 +69,16 @@ export function generateStaticParams() {
 // Types
 interface LayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 interface MetadataProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 // Advanced SEO metadata generation
-export async function generateMetadata({ params: { locale } }: MetadataProps) {
+export async function generateMetadata({ params }: MetadataProps) {
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Hero' });
   
   const title = t('title');
@@ -532,13 +540,17 @@ async function generateAdvancedJsonLd(locale: string, title: string, description
 }
 
 // Advanced layout content component
-async function LayoutContent({
-  locale,
-  children
-}: {
-  locale: string;
-  children: React.ReactNode;
+async function LayoutContent({ 
+  locale, 
+  children 
+}: { 
+  locale: string; 
+  children: React.ReactNode; 
 }) {
+  const headersList = await headers();
+  const userAgent = headersList.get('user-agent') || '';
+  const isBot = /bot|crawler|spider|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegram/i.test(userAgent);
+
   const messages = await getMessages(locale);
   const t = await getTranslations({ locale, namespace: 'Hero' });
   
@@ -577,7 +589,7 @@ async function LayoutContent({
               {children}
             </div>
             
-            <DynamicClientOnlyWrapper />
+            {!isBot && <ClientOnlyWrapperProvider />}
           </ClientProviders>
         </Suspense>
       </div>
@@ -601,10 +613,7 @@ async function LayoutContent({
             
             // Preload critical resources
             const preloadCriticalResources = () => {
-              const criticalImages = [
-                '/optimized/hero.webp',
-                '/optimized/about.webp',
-              ];
+             
               
               criticalImages.forEach(src => {
                 const link = document.createElement('link');
@@ -629,10 +638,11 @@ async function LayoutContent({
 }
 
 // Main layout component with advanced SEO
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: LayoutProps) {
+  const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
@@ -693,7 +703,7 @@ export default function LocaleLayout({
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
         
         {/* Critical CSS preload */}
-      
+       
         
         {/* Preload critical fonts */}
         <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossOrigin="" />

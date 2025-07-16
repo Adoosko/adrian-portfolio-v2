@@ -30,10 +30,11 @@ async function getMessages(locale: string) {
 }
 
 interface HomePageProps {
-  params: {locale: string};
+  params: Promise<{ locale: string }>;
 }
 
-export default async function HomePage({ params: { locale } }: HomePageProps) {
+export default async function HomePage({ params }: HomePageProps) {
+  let locale = (await params).locale
   const messages = await getMessages(locale);
   
   // Optimalizované data objekty

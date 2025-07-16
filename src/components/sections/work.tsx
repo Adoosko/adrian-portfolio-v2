@@ -1,7 +1,7 @@
 'use client';
 
 import { ExternalLink, Github } from 'lucide-react';
-import { LazyMotion, domAnimation, m } from 'motion/react';
+import { LazyMotion, domAnimation, m, useInView } from 'motion/react';
 import Image from "next/image";
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Pagination } from 'swiper/modules';
@@ -157,34 +157,31 @@ DesktopGrid.displayName = 'DesktopGrid';
 
 // Hlavný Work komponent s m komponentom
 const Work = memo<WorkProps>(({ data }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [deviceIsMobile, setDeviceIsMobile] = useState(false);
 
   useEffect(() => {
-    setDeviceIsMobile(isMobile());
-    
-    const handleResize = () => {
-      setDeviceIsMobile(isMobile());
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const checkDevice = () => setDeviceIsMobile(isMobile());
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
   const containerVariants = useMemo(() => staggerContainer, []);
+  const itemVariants = useMemo(() => fadeInUp, []);
 
   return (
     <LazyMotion features={domAnimation}>
-      <section id="work" ref={containerRef} className="py-20 px-6 lg:px-20">
+      <section id="work" ref={ref} className="py-20 px-6 lg:px-20">
         <div className="max-w-6xl mx-auto">
           <m.div
             variants={containerVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            animate={isInView ? 'visible' : 'hidden'}
           >
             {/* Section Header */}
-            <m.div variants={fadeInUp} className="mb-16 text-center">
+            <m.div variants={itemVariants} className="mb-16 text-center">
               <div className="flex items-center justify-center gap-4 mb-4">
                 <span className="text-sm text-muted-foreground">02</span>
                 <h2 className="text-3xl font-light">{data.title}</h2>
@@ -207,7 +204,7 @@ const Work = memo<WorkProps>(({ data }) => {
               )
             ) : (
               <m.div
-                variants={fadeInUp}
+                variants={itemVariants}
                 className="text-center py-12"
               >
                 <p className="text-muted-foreground">{data.no_projects}</p>

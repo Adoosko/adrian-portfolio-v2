@@ -13,19 +13,8 @@ const nextConfig: NextConfig = {
   
  
   
-  // ✅ TURBOPACK JE STABLE - nie experimental
-  turbo: {
-    // Stable Turbopack konfigurácia
-    loaders: {
-      '.svg': ['@svgr/webpack'],
-    },
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
-    },
-  },
+  
+  
   
   // Experimental features len pre pokročilé use cases
   experimental: {
