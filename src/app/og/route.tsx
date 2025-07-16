@@ -8,9 +8,7 @@ export async function GET(request: Request) {
   const title = searchParams.get("title") || "Adrian Finik";
   const subtitle = searchParams.get("subtitle") || "Web Developer";
 
-  const fontBold = await fetch(
-    new URL("../../../public/fonts/boska/Boska-Bold.woff2", import.meta.url)
-  ).then((res) => res.arrayBuffer());
+ 
 
   return new ImageResponse(
     (
@@ -65,14 +63,7 @@ export async function GET(request: Request) {
     {
       width: 1200,
       height: 630,
-      fonts: [
-        {
-          name: "Boska",
-          data: fontBold,
-          style: "normal",
-          weight: 700,
-        },
-      ],
+      
     }
   );
 }

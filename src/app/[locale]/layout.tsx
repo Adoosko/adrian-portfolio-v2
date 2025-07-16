@@ -1,10 +1,9 @@
 // src/app/[locale]/layout.tsx
 import { routing } from '@/i18n/routing';
-import { boska } from '@/lib/fonts';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import dynamic from 'next/dynamic';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
@@ -19,13 +18,7 @@ const inter = Inter({
   preload: true,
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-  fallback: ['Consolas', 'Monaco', 'monospace'],
-  preload: false,
-});
+
 
 // Cached message loader pre PPR
 async function getMessages(locale: string) {
@@ -253,7 +246,7 @@ async function LayoutContent({
 
   return (
     <body
-      className={`${inter.variable} ${boska.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary-foreground`}
+      className={`${inter.variable} font-sans min-h-screen bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary-foreground`}
       suppressHydrationWarning
     >
       <a

@@ -63,12 +63,7 @@ const nextConfig: NextConfig = {
               priority: -10,
               chunks: 'all',
             },
-            framerMotion: {
-              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
-              name: 'framer-motion',
-              priority: 10,
-              chunks: 'all',
-            },
+            
             common: {
               name: 'common',
               minChunks: 2,

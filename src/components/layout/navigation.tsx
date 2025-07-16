@@ -2,18 +2,18 @@
 
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useAnimationStore } from '@/stores/animation-store';
+import { ArrowRight, Download, Menu, X } from 'lucide-react';
 import {
   AnimatePresence,
   LazyMotion,
   domAnimation,
-  motion,
+  m,
   useMotionValue,
   useScroll,
   useSpring,
   useTransform,
   type Variants,
-} from 'framer-motion';
-import { ArrowRight, Download, Menu, X } from 'lucide-react';
+} from 'motion/react';
 import {
   memo,
   startTransition,
@@ -69,7 +69,7 @@ const createItemVariants = (): Variants => ({
   },
 });
 
-// Optimalizovaný NavItem komponent
+// Optimalizovaný NavItem komponent s m komponentom
 const MemoizedNavItem = memo<{
   item: { name: string; href: string; index: string };
   isActive: boolean;
@@ -82,8 +82,8 @@ const MemoizedNavItem = memo<{
   const handleMouseEnter = useCallback(() => onHover(item.href), [item.href, onHover]);
 
   return (
-    <motion.div className="relative" variants={createItemVariants()}>
-      <motion.button
+    <m.div className="relative" variants={createItemVariants()}>
+      <m.button
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={onLeave}
@@ -103,7 +103,7 @@ const MemoizedNavItem = memo<{
         <span className="font-mono text-xs">{item.index}</span>
         <span className="tracking-wide">{item.name}</span>
         
-        <motion.div
+        <m.div
           initial={{ x: -8, opacity: 0 }}
           animate={{
             x: isHovered ? 0 : -8,
@@ -112,12 +112,12 @@ const MemoizedNavItem = memo<{
           transition={{ duration: 0.2, ease: EASING_SMOOTH }}
         >
           <ArrowRight className="w-3 h-3" />
-        </motion.div>
-      </motion.button>
+        </m.div>
+      </m.button>
 
       <AnimatePresence>
         {(isHovered || isActive) && (
-          <motion.div
+          <m.div
             layoutId="navbar-hover"
             className="absolute inset-0 bg-muted rounded-lg"
             initial={{ opacity: 0 }}
@@ -127,7 +127,7 @@ const MemoizedNavItem = memo<{
           />
         )}
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -184,7 +184,7 @@ const useActiveSection = (navItems: { href: string }[]) => {
   return activeSection;
 };
 
-// Hlavný Navigation komponent
+// Hlavný Navigation komponent s m komponentom
 const Navigation = memo<NavigationProps>(({ data }) => {
   const navItems = useMemo(() => [
     { name: data.about, href: '#about', index: '01' },
@@ -229,7 +229,7 @@ const Navigation = memo<NavigationProps>(({ data }) => {
 
   return (
     <LazyMotion features={domAnimation}>
-      <motion.nav
+      <m.nav
         variants={navVariants}
         initial="hidden"
         animate={animateHero ? 'visible' : 'hidden'}
@@ -244,20 +244,20 @@ const Navigation = memo<NavigationProps>(({ data }) => {
           <div className="flex items-center justify-between h-16 lg:h-20">
             
             {/* Logo */}
-            <motion.div variants={createItemVariants()}>
-              <motion.button
+            <m.div variants={createItemVariants()}>
+              <m.button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="text-xl lg:text-2xl font-mono font-semibold tracking-tight text-foreground"
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                 whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
               >
                 AF
-              </motion.button>
-            </motion.div>
+              </m.button>
+            </m.div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
-              <motion.div 
+              <m.div 
                 className="flex items-center space-x-1 relative bg-muted/50 rounded-xl p-1.5 border border-border/50"
                 variants={createItemVariants()}
               >
@@ -272,16 +272,16 @@ const Navigation = memo<NavigationProps>(({ data }) => {
                     onClick={scrollToSection}
                   />
                 ))}
-              </motion.div>
+              </m.div>
 
-              <motion.div 
+              <m.div 
                 variants={createItemVariants()}
                 className="flex items-center space-x-4 ml-6"
               >
                 <ThemeToggle />
                 <LanguageSwitcher />
                 
-                <motion.a
+                <m.a
                   href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -291,8 +291,8 @@ const Navigation = memo<NavigationProps>(({ data }) => {
                 >
                   <Download className="w-4 h-4" />
                   <span>{data.resume}</span>
-                </motion.a>
-              </motion.div>
+                </m.a>
+              </m.div>
             </div>
 
             {/* Mobile Menu Button */}
@@ -300,7 +300,7 @@ const Navigation = memo<NavigationProps>(({ data }) => {
               <LanguageSwitcher />
               <ThemeToggle />
               
-              <motion.button
+              <m.button
                 onClick={toggleMobileMenu}
                 className="p-2 rounded-lg hover:bg-muted transition-colors"
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
@@ -308,7 +308,7 @@ const Navigation = memo<NavigationProps>(({ data }) => {
               >
                 <AnimatePresence mode="wait">
                   {isMobileMenuOpen ? (
-                    <motion.div
+                    <m.div
                       key="close"
                       initial={{ rotate: -90, opacity: 0 }}
                       animate={{ rotate: 0, opacity: 1 }}
@@ -316,9 +316,9 @@ const Navigation = memo<NavigationProps>(({ data }) => {
                       transition={{ duration: 0.2 }}
                     >
                       <X size={20} />
-                    </motion.div>
+                    </m.div>
                   ) : (
-                    <motion.div
+                    <m.div
                       key="menu"
                       initial={{ rotate: 90, opacity: 0 }}
                       animate={{ rotate: 0, opacity: 1 }}
@@ -326,10 +326,10 @@ const Navigation = memo<NavigationProps>(({ data }) => {
                       transition={{ duration: 0.2 }}
                     >
                       <Menu size={20} />
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
-              </motion.button>
+              </m.button>
             </div>
           </div>
         </div>
@@ -337,7 +337,7 @@ const Navigation = memo<NavigationProps>(({ data }) => {
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
+            <m.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -346,7 +346,7 @@ const Navigation = memo<NavigationProps>(({ data }) => {
             >
               <div className="px-6 py-8 space-y-6">
                 {navItems.map((item, index) => (
-                  <motion.button
+                  <m.button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
                     className="flex items-center space-x-4 w-full text-left py-3 px-4 rounded-lg hover:bg-muted transition-colors"
@@ -362,13 +362,13 @@ const Navigation = memo<NavigationProps>(({ data }) => {
                     <span className="text-xl font-medium text-foreground">
                       {item.name}
                     </span>
-                  </motion.button>
+                  </m.button>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
-      </motion.nav>
+      </m.nav>
     </LazyMotion>
   );
 });

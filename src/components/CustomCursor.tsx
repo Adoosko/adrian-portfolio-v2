@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useSpring } from 'framer-motion';
+import { motion, useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 export function CustomCursor() {

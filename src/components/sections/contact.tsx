@@ -6,15 +6,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useFormStore } from '@/stores/form-store';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AlertCircle, Check, Send } from 'lucide-react';
 import {
   AnimatePresence,
   LazyMotion,
   domAnimation,
-  motion,
+  m,
   useInView,
   type Variants
-} from 'framer-motion';
-import { AlertCircle, Check, Send } from 'lucide-react';
+} from 'motion/react';
 import {
   memo,
   startTransition,
@@ -28,7 +28,6 @@ import { useForm, type FieldError } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-// Optimalizované typy
 interface ContactProps {
   data: {
     title: string;
@@ -91,7 +90,7 @@ const createItemVariants = (): Variants => ({
   },
 });
 
-// Optimalizovaný FormField komponent
+// Optimalizovaný FormField komponent s m komponentom
 const FormField = memo<{
   label: string;
   name: string;
@@ -127,7 +126,6 @@ const FormField = memo<{
     setFocusedField(null);
   }, [setFocusedField]);
 
-  // Memoizované styles
   const labelClasses = useMemo(() => 
     `absolute left-3 transition-all duration-300 pointer-events-none ${
       isFocused || hasValue 
@@ -145,13 +143,12 @@ const FormField = memo<{
   );
 
   return (
-    <motion.div
+    <m.div
       className="relative"
       whileHover={{ scale: 1.01 }}
       transition={{ duration: 0.2 }}
     >
-      {/* Floating Label */}
-      <motion.label
+      <m.label
         htmlFor={name}
         className={labelClasses}
         animate={{
@@ -161,10 +158,9 @@ const FormField = memo<{
         transition={{ duration: 0.2 }}
       >
         {label}
-      </motion.label>
+      </m.label>
 
-      {/* Input Field */}
-      <motion.div className="relative">
+      <m.div className="relative">
         <Input
           {...register(name)}
           type={type}
@@ -178,19 +174,17 @@ const FormField = memo<{
           aria-invalid={hasError}
         />
 
-        {/* Focus indicator */}
-        <motion.div
+        <m.div
           className="absolute bottom-0 left-0 h-0.5 bg-foreground"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: isFocused ? 1 : 0 }}
           transition={{ duration: 0.3 }}
         />
-      </motion.div>
+      </m.div>
 
-      {/* Error Message */}
       <AnimatePresence>
         {hasError && (
-          <motion.div
+          <m.div
             id={`${name}-error`}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -201,16 +195,16 @@ const FormField = memo<{
           >
             <AlertCircle size={14} />
             <span>{error.message}</span>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   );
 });
 
 FormField.displayName = 'FormField';
 
-// Optimalizovaný MessageField komponent
+// Optimalizovaný MessageField komponent s m komponentom
 const MessageField = memo<{
   label: string;
   placeholder: string;
@@ -252,13 +246,12 @@ const MessageField = memo<{
   );
 
   return (
-    <motion.div
+    <m.div
       className="relative"
       whileHover={{ scale: 1.005 }}
       transition={{ duration: 0.2 }}
     >
-      {/* Floating Label */}
-      <motion.label
+      <m.label
         htmlFor="message"
         className={`absolute left-3 transition-all duration-300 pointer-events-none z-10 ${
           isFocused || hasValue 
@@ -272,10 +265,9 @@ const MessageField = memo<{
         transition={{ duration: 0.2 }}
       >
         {label}
-      </motion.label>
+      </m.label>
 
-      {/* Textarea Field */}
-      <motion.div className="relative">
+      <m.div className="relative">
         <Textarea
           {...register('message')}
           id="message"
@@ -290,29 +282,26 @@ const MessageField = memo<{
           maxLength={1000}
         />
 
-        {/* Focus indicator */}
-        <motion.div
+        <m.div
           className="absolute bottom-0 left-0 h-0.5 bg-foreground"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: isFocused ? 1 : 0 }}
           transition={{ duration: 0.3 }}
         />
 
-        {/* Character counter */}
-        <motion.div
+        <m.div
           className="absolute bottom-2 right-3 text-xs text-muted-foreground"
           animate={{ opacity: isFocused ? 1 : 0 }}
           transition={{ duration: 0.2 }}
           aria-live="polite"
         >
           {charCount}/1000
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
-      {/* Error Message */}
       <AnimatePresence>
         {hasError && (
-          <motion.div
+          <m.div
             id="message-error"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -322,18 +311,17 @@ const MessageField = memo<{
             aria-live="polite"
           >
             <AlertCircle size={14} />
-            
             <span>{error.message}</span>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   );
 });
 
 MessageField.displayName = 'MessageField';
 
-// Optimalizovaný SubmitButton komponent
+// Optimalizovaný SubmitButton komponent s m komponentom
 const SubmitButton = memo<{
   isSubmitting: boolean;
   isSuccess: boolean;
@@ -344,7 +332,7 @@ const SubmitButton = memo<{
   const buttonContent = useMemo(() => {
     if (isSuccess) {
       return (
-        <motion.div
+        <m.div
           key="success"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -353,31 +341,31 @@ const SubmitButton = memo<{
         >
           <Check size={16} />
           <span>{sentButton}</span>
-        </motion.div>
+        </m.div>
       );
     }
 
     if (isSubmitting) {
       return (
-        <motion.div
+        <m.div
           key="loading"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           className="flex items-center space-x-2"
         >
-          <motion.div
+          <m.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             className="w-4 h-4 border border-current border-t-transparent rounded-full"
           />
           <span>{sendingButton}</span>
-        </motion.div>
+        </m.div>
       );
     }
 
     return (
-      <motion.div
+      <m.div
         key="default"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -386,12 +374,12 @@ const SubmitButton = memo<{
       >
         <Send size={16} />
         <span>{sendButton}</span>
-      </motion.div>
+      </m.div>
     );
   }, [isSubmitting, isSuccess, sendButton, sendingButton, sentButton]);
 
   return (
-    <motion.div
+    <m.div
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.2 }}
@@ -407,13 +395,13 @@ const SubmitButton = memo<{
           {buttonContent}
         </AnimatePresence>
       </Button>
-    </motion.div>
+    </m.div>
   );
 });
 
 SubmitButton.displayName = 'SubmitButton';
 
-// Hlavný Contact komponent s brutal optimalizáciami
+// Hlavný Contact komponent s m komponentom
 const Contact = memo<ContactProps>(({ data }) => {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
@@ -430,7 +418,6 @@ const Contact = memo<ContactProps>(({ data }) => {
     toast: formToast,
   } = useFormStore();
 
-  // Memoizované schema
   const contactSchema = useMemo(() => 
     createContactSchema(data.validation), [data.validation]
   );
@@ -446,12 +433,11 @@ const Contact = memo<ContactProps>(({ data }) => {
   } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
     defaultValues: contactForm,
-    mode: 'onChange', // Real-time validation
+    mode: 'onChange',
   });
 
   const watchedValues = watch();
 
-  // Optimalizovaný submit handler
   const onSubmit = useCallback(async (formData: ContactForm) => {
     setIsSubmitting(true);
     setContactForm(formData);
@@ -479,7 +465,6 @@ const Contact = memo<ContactProps>(({ data }) => {
     } finally {
       setIsSubmitting(false);
       
-      // Auto-hide success state
       if (isSuccess) {
         setTimeout(() => {
           startTransition(() => {
@@ -490,7 +475,6 @@ const Contact = memo<ContactProps>(({ data }) => {
     }
   }, [setIsSubmitting, setContactForm, reset, resetContactForm, data.toast_success, data.toast_error, isSuccess]);
 
-  // Cleanup toast effects
   useEffect(() => {
     if (formToast) {
       if (formToast.type === 'success') {
@@ -502,7 +486,6 @@ const Contact = memo<ContactProps>(({ data }) => {
     }
   }, [formToast, setToast]);
 
-  // Memoizované variants
   const containerVariants = useMemo(() => createContainerVariants(), []);
   const itemVariants = useMemo(() => createItemVariants(), []);
 
@@ -515,18 +498,17 @@ const Contact = memo<ContactProps>(({ data }) => {
         aria-labelledby="contact-heading"
       >
         <div className="max-w-4xl mx-auto">
-          <motion.div
+          <m.div
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            {/* Section Header */}
-            <motion.div
+            <m.div
               variants={itemVariants}
               className="mb-16 text-center"
             >
               <div className="flex items-center justify-center space-x-6 mb-8">
-                <motion.div 
+                <m.div 
                   className="flex-1 h-px bg-border"
                   initial={{ scaleX: 0 }}
                   animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
@@ -534,7 +516,7 @@ const Contact = memo<ContactProps>(({ data }) => {
                 />
                 
                 <div className="flex items-center space-x-4">
-                  <motion.span 
+                  <m.span 
                     className="font-mono text-sm text-muted-foreground"
                     animate={{
                       opacity: [0.5, 1, 0.5],
@@ -546,7 +528,7 @@ const Contact = memo<ContactProps>(({ data }) => {
                     }}
                   >
                     03
-                  </motion.span>
+                  </m.span>
                   <h2 
                     id="contact-heading"
                     className="text-2xl lg:text-3xl font-light text-foreground whitespace-nowrap tracking-tight"
@@ -555,7 +537,7 @@ const Contact = memo<ContactProps>(({ data }) => {
                   </h2>
                 </div>
                 
-                <motion.div 
+                <m.div 
                   className="flex-1 h-px bg-border"
                   initial={{ scaleX: 0 }}
                   animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
@@ -563,16 +545,15 @@ const Contact = memo<ContactProps>(({ data }) => {
                 />
               </div>
 
-              <motion.p
+              <m.p
                 variants={itemVariants}
                 className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
               >
                 {data.description}
-              </motion.p>
-            </motion.div>
+              </m.p>
+            </m.div>
 
-            {/* Contact Form */}
-            <motion.div
+            <m.div
               variants={itemVariants}
               className="relative"
             >
@@ -581,7 +562,6 @@ const Contact = memo<ContactProps>(({ data }) => {
                 className="space-y-8"
                 noValidate
               >
-                {/* Form Fields Grid */}
                 <div className="grid md:grid-cols-2 gap-8">
                   <FormField
                     label={data.name}
@@ -620,7 +600,6 @@ const Contact = memo<ContactProps>(({ data }) => {
                   isSubmitting={isSubmitting}
                 />
 
-                {/* Submit Button */}
                 <div className="text-center pt-4">
                   <SubmitButton
                     isSubmitting={isSubmitting}
@@ -631,8 +610,8 @@ const Contact = memo<ContactProps>(({ data }) => {
                   />
                 </div>
               </form>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </section>
     </LazyMotion>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, MotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, MotionValue, useSpring, useTransform } from "motion/react";
 import Image from "next/legacy/image";
 import { useState } from "react";
 

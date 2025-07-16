@@ -1,7 +1,7 @@
 //@ts-nocheck
 "use client";
 
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, MotionValue, useTransform } from "motion/react";
 
 interface SectionHeaderProps {
   scrollProgress: MotionValue<number>;

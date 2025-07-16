@@ -1,7 +1,7 @@
 'use client';
 
-import { AnimatePresence, LazyMotion, domAnimation, motion } from 'framer-motion';
 import { Cookie, Settings, Shield, X } from 'lucide-react';
+import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import {
   memo,
@@ -30,8 +30,8 @@ interface CookieConsentState {
 // Konstanty pre optimalizáciu
 const COOKIE_NAME = 'adrianfinik-cookie-consent-v2';
 const COOKIE_VERSION = '2.0';
-const SHOW_DELAY = 3000; // Redukovaný delay
-const COOKIE_EXPIRY = 365; // 1 rok
+const SHOW_DELAY = 3000;
+const COOKIE_EXPIRY = 365;
 
 // Optimalizované animácie
 const bannerVariants = {
@@ -63,7 +63,7 @@ const buttonVariants = {
   tap: { scale: 0.95 }
 };
 
-// Utilita pre cookie management
+// Cookie utilities
 const cookieUtils = {
   set: (value: CookieConsentState) => {
     if (typeof window !== 'undefined') {
@@ -98,7 +98,7 @@ const cookieUtils = {
   }
 };
 
-// Memoizovaný preferences modal
+// Memoizovaný preferences modal s m komponentom
 const CookiePreferencesModal = memo<{
   isOpen: boolean;
   onClose: () => void;
@@ -108,7 +108,7 @@ const CookiePreferencesModal = memo<{
   t: any;
 }>(({ isOpen, onClose, preferences, onPreferencesChange, onSave, t }) => {
   const handleToggle = useCallback((key: keyof CookiePreferences) => {
-    if (key === 'necessary') return; // Necessary cookies nie je možné vypnúť
+    if (key === 'necessary') return;
     
     onPreferencesChange({
       ...preferences,
@@ -119,14 +119,14 @@ const CookiePreferencesModal = memo<{
   if (!isOpen) return null;
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
       onClick={onClose}
     >
-      <motion.div
+      <m.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
@@ -186,14 +186,14 @@ const CookiePreferencesModal = memo<{
             {t('preferencesModal.cancel')}
           </button>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 });
 
 CookiePreferencesModal.displayName = 'CookiePreferencesModal';
 
-// Hlavný optimalizovaný komponent
+// Hlavný optimalizovaný komponent s m komponentom
 const CookieConsentComponent = memo(() => {
   const t = useTranslations('CookieConsent');
   const [showBanner, setShowBanner] = useState(false);
@@ -206,7 +206,6 @@ const CookieConsentComponent = memo(() => {
     preferences: false
   });
 
-  // Skontrolujte existujúci consent pri mount
   useEffect(() => {
     const existingConsent = cookieUtils.get();
     
@@ -214,7 +213,6 @@ const CookieConsentComponent = memo(() => {
       setConsentState(existingConsent);
       setPreferences(existingConsent.preferences);
     } else {
-      // Zobrazenie banneru s delay
       const timer = setTimeout(() => {
         startTransition(() => {
           setShowBanner(true);
@@ -225,7 +223,6 @@ const CookieConsentComponent = memo(() => {
     }
   }, []);
 
-  // Optimalizované callback funkcie
   const handleAcceptAll = useCallback(() => {
     const newState: CookieConsentState = {
       status: 'accepted',
@@ -243,7 +240,6 @@ const CookieConsentComponent = memo(() => {
     setConsentState(newState);
     setShowBanner(false);
     
-    // Trigger analytics/marketing scripts
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('cookieConsentAccepted', { detail: newState }));
     }
@@ -266,7 +262,6 @@ const CookieConsentComponent = memo(() => {
     setConsentState(newState);
     setShowBanner(false);
     
-    // Clear existing tracking
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('cookieConsentDeclined', { detail: newState }));
     }
@@ -285,7 +280,6 @@ const CookieConsentComponent = memo(() => {
     setShowBanner(false);
     setShowPreferences(false);
     
-    // Trigger selective scripts
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('cookieConsentPartial', { detail: newState }));
     }
@@ -303,7 +297,6 @@ const CookieConsentComponent = memo(() => {
     setPreferences(newPreferences);
   }, []);
 
-  // Memoizované tlačidlá
   const buttons = useMemo(() => [
     {
       id: 'acceptAll',
@@ -328,7 +321,6 @@ const CookieConsentComponent = memo(() => {
     }
   ], [t, handleAcceptAll, handleShowPreferences, handleDeclineAll]);
 
-  // Ak už je consent daný, nezobraziť banner
   if (consentState || !showBanner) {
     return (
       <AnimatePresence>
@@ -350,7 +342,8 @@ const CookieConsentComponent = memo(() => {
     <LazyMotion features={domAnimation}>
       <AnimatePresence>
         {showBanner && (
-          <motion.div
+          <m.div
+          //@ts-ignore
             variants={bannerVariants}
             initial="hidden"
             animate="visible"
@@ -359,7 +352,6 @@ const CookieConsentComponent = memo(() => {
           >
             <div className="max-w-7xl mx-auto p-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                {/* Cookie Icon & Message */}
                 <div className="flex items-start gap-3 flex-1">
                   <div className="p-2 bg-primary/10 rounded-lg">
                     <Cookie className="h-5 w-5 text-primary" />
@@ -374,12 +366,11 @@ const CookieConsentComponent = memo(() => {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex flex-wrap gap-2">
                   {buttons.map((button) => {
                     const Icon = button.icon;
                     return (
-                      <motion.button
+                      <m.button
                         key={button.id}
                         variants={buttonVariants}
                         whileHover="hover"
@@ -398,16 +389,15 @@ const CookieConsentComponent = memo(() => {
                       >
                         {Icon && <Icon className="h-4 w-4" />}
                         {button.text}
-                      </motion.button>
+                      </m.button>
                     );
                   })}
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
 
-        {/* Preferences Modal */}
         <CookiePreferencesModal
           isOpen={showPreferences}
           onClose={handleClosePreferences}

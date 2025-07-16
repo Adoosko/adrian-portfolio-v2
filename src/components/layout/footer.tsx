@@ -1,7 +1,7 @@
 'use client';
 
-import { LazyMotion, domAnimation, motion } from 'framer-motion';
 import { ArrowUp, ExternalLink, Github, Linkedin, Mail } from 'lucide-react';
+import { LazyMotion, domAnimation, m } from 'motion/react';
 import {
   memo,
   useCallback,
@@ -52,19 +52,21 @@ const SOCIAL_LINKS: SocialLink[] = [
   },
 ];
 
-// Memoizované sub-komponenty
+// Memoizované sub-komponenty s m komponentom
 const ScrollToTopButton = memo<{
   onClick: () => void;
   children: React.ReactNode;
   className?: string;
 }>(({ onClick, children, className }) => (
-  <motion.button
+  <m.button
     onClick={onClick}
-   
+    whileHover={{ scale: 1.01 }}
+    whileTap={{ scale: 0.99 }}
+    transition={{ duration: 0.2 }}
     className={className}
   >
     {children}
-  </motion.button>
+  </m.button>
 ));
 
 ScrollToTopButton.displayName = 'ScrollToTopButton';
@@ -73,14 +75,14 @@ const NavigationLink = memo<{
   onClick: () => void;
   children: React.ReactNode;
 }>(({ onClick, children }) => (
-  <motion.button
+  <m.button
     onClick={onClick}
     whileHover={{ x: 4 }}
     transition={{ duration: 0.2 }}
     className="block text-muted-foreground hover:text-foreground transition-colors text-left"
   >
     {children}
-  </motion.button>
+  </m.button>
 ));
 
 NavigationLink.displayName = 'NavigationLink';
@@ -90,7 +92,7 @@ const SocialButton = memo<{
   icon: ComponentType<{ size?: number }>;
   name: string;
 }>(({ href, icon: Icon, name }) => (
-  <motion.a
+  <m.a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
@@ -101,7 +103,7 @@ const SocialButton = memo<{
     aria-label={name}
   >
     <Icon size={20} />
-  </motion.a>
+  </m.a>
 ));
 
 SocialButton.displayName = 'SocialButton';
@@ -167,7 +169,7 @@ const Footer = memo<FooterProps>(({ data, nav }) => {
                     {link.name}
                   </NavigationLink>
                 ))}
-                <motion.a
+                <m.a
                   href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -178,7 +180,7 @@ const Footer = memo<FooterProps>(({ data, nav }) => {
                 >
                   <span>{nav.resume}</span>
                   <ExternalLink size={14} />
-                </motion.a>
+                </m.a>
               </nav>
             </div>
 
@@ -205,7 +207,7 @@ const Footer = memo<FooterProps>(({ data, nav }) => {
         <div className="border-t border-border bg-muted/30">
           <div className="py-12">
             {/* Large ADRIANFINIK Text */}
-            <motion.div
+            <m.div
               className="text-center mb-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -214,11 +216,11 @@ const Footer = memo<FooterProps>(({ data, nav }) => {
             >
               <ScrollToTopButton
                 onClick={scrollToTop}
-                className="text-3xl sm:text-4xl md:text-6xl font-serif lg:text-9xl font-bold tracking-widest uppercase text-foreground cursor-pointer select-none "
+                className="text-3xl sm:text-4xl md:text-6xl font-serif lg:text-9xl font-bold tracking-widest uppercase text-foreground cursor-pointer select-none hover:text-muted-foreground transition-colors"
               >
                 ADRIANFINIK.
               </ScrollToTopButton>
-            </motion.div>
+            </m.div>
 
             {/* Copyright & Back to Top */}
             <div className="max-w-6xl mx-auto px-6">
@@ -231,17 +233,17 @@ const Footer = memo<FooterProps>(({ data, nav }) => {
                   <span className="text-sm text-muted-foreground">
                     {data.built_with}
                   </span>
-                  <motion.button
+                  <m.button
                     onClick={scrollToTop}
                     whileHover={{ y: -3, scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
                   >
                     <span>{data.back_to_top}</span>
-                    <motion.div animate={arrowAnimation}>
+                    <m.div animate={arrowAnimation}>
                       <ArrowUp size={14} />
-                    </motion.div>
-                  </motion.button>
+                    </m.div>
+                  </m.button>
                 </div>
               </div>
             </div>

@@ -1,9 +1,9 @@
 'use client';
 
-import { LazyMotion, domAnimation, motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
-import Image from "next/legacy/image";
-import { memo, useMemo, useRef } from 'react';
+import { LazyMotion, domAnimation, m } from 'motion/react';
+import Image from "next/image";
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -32,7 +32,10 @@ interface WorkProps {
   };
 }
 
-// Jednoduché animácie
+// Device detection
+const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
+
+// Mobile-first animácie pre m komponent
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -46,13 +49,12 @@ const staggerContainer = {
   }
 };
 
-// Minimalistický Project Card
+// Optimalizovaný ProjectCard
 const ProjectCard = memo<{
   project: Project;
   featuredText: string;
 }>(({ project, featuredText }) => (
   <div className="bg-card border border-border rounded-lg overflow-hidden">
-    {/* Project Image */}
     <div className="aspect-video bg-muted relative">
       {project.image ? (
         <Image
@@ -61,6 +63,7 @@ const ProjectCard = memo<{
           width={400}
           height={225}
           className="w-full h-full object-cover"
+          loading="lazy"
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center">
@@ -69,27 +72,21 @@ const ProjectCard = memo<{
       )}
     </div>
 
-    {/* Project Info */}
     <div className="p-6">
       <p className="text-sm text-muted-foreground mb-2">{featuredText}</p>
       <h3 className="text-xl font-medium mb-3">{project.title}</h3>
       <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
 
-      {/* Technologies */}
       {project.technologies && (
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 bg-muted rounded text-xs"
-            >
+            <span key={index} className="px-2 py-1 bg-muted rounded text-xs">
               {tech}
             </span>
           ))}
         </div>
       )}
 
-      {/* Links */}
       <div className="flex gap-2">
         {project.links?.github && (
           <a
@@ -97,6 +94,7 @@ const ProjectCard = memo<{
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 bg-muted rounded hover:bg-muted/80 transition-colors"
+            aria-label={`View ${project.title} on GitHub`}
           >
             <Github size={16} />
           </a>
@@ -107,8 +105,8 @@ const ProjectCard = memo<{
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 bg-muted rounded hover:bg-muted/80 transition-colors"
+            aria-label={`View ${project.title} live demo`}
           >
-            Link
             <ExternalLink size={16} />
           </a>
         )}
@@ -141,56 +139,62 @@ const MobileSlider = memo<{
 
 MobileSlider.displayName = 'MobileSlider';
 
-// Desktop Grid
+// Desktop Grid s m komponentom
 const DesktopGrid = memo<{
   projects: Project[];
   featuredText: string;
 }>(({ projects, featuredText }) => (
   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
     {projects.map((project) => (
-      <motion.div key={project.id} variants={fadeInUp}>
+      <m.div key={project.id} variants={fadeInUp}>
         <ProjectCard project={project} featuredText={featuredText} />
-      </motion.div>
+      </m.div>
     ))}
   </div>
 ));
 
 DesktopGrid.displayName = 'DesktopGrid';
 
-// Hlavný Work komponent
+// Hlavný Work komponent s m komponentom
 const Work = memo<WorkProps>(({ data }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [deviceIsMobile, setDeviceIsMobile] = useState(false);
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  useEffect(() => {
+    setDeviceIsMobile(isMobile());
+    
+    const handleResize = () => {
+      setDeviceIsMobile(isMobile());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const containerVariants = useMemo(() => staggerContainer, []);
 
   return (
     <LazyMotion features={domAnimation}>
-      <section
-        id="work"
-        ref={containerRef}
-        className="py-20 px-6 lg:px-20"
-      >
+      <section id="work" ref={containerRef} className="py-20 px-6 lg:px-20">
         <div className="max-w-6xl mx-auto">
-          <motion.div
+          <m.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
             {/* Section Header */}
-            <motion.div variants={fadeInUp} className="mb-16 text-center">
+            <m.div variants={fadeInUp} className="mb-16 text-center">
               <div className="flex items-center justify-center gap-4 mb-4">
                 <span className="text-sm text-muted-foreground">02</span>
                 <h2 className="text-3xl font-light">{data.title}</h2>
                 <div className="flex-1 h-px bg-border" />
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Projects */}
             {data.projects.length > 0 ? (
-              isMobile ? (
+              deviceIsMobile ? (
                 <MobileSlider
                   projects={data.projects}
                   featuredText={data.featured}
@@ -202,14 +206,14 @@ const Work = memo<WorkProps>(({ data }) => {
                 />
               )
             ) : (
-              <motion.div
+              <m.div
                 variants={fadeInUp}
                 className="text-center py-12"
               >
                 <p className="text-muted-foreground">{data.no_projects}</p>
-              </motion.div>
+              </m.div>
             )}
-          </motion.div>
+          </m.div>
         </div>
       </section>
     </LazyMotion>

@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, domAnimation, useScroll } from 'framer-motion';
+import { LazyMotion, domAnimation, useScroll } from 'motion/react';
 import React, {
   memo,
   startTransition,
