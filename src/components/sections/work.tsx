@@ -80,7 +80,7 @@ const ProjectCard = memo<{
       {project.technologies && (
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech, index) => (
-            <span key={index} className="px-2 py-1 bg-muted rounded text-xs">
+            <span key={tech} className="px-2 py-1 bg-muted rounded text-xs">
               {tech}
             </span>
           ))}

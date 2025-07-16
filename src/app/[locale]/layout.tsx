@@ -4,21 +4,12 @@ import { routing } from '@/i18n/routing';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import dynamic from 'next/dynamic';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import './globals.css';
 
-// Optimalizované font loading pre advanced SEO
-const inter = Inter({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-inter',
-  display: 'swap',
-  fallback: ['system-ui', 'sans-serif'],
-  preload: true,
-  adjustFontFallback: false,
-});
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -260,7 +251,7 @@ export async function generateMetadata({ params }: MetadataProps) {
     },
     
     // Advanced Manifest
-    manifest: '/manifest.json',
+    manifest: '/site.webmanifest',
     
     // Advanced Icons
     icons: {
@@ -560,7 +551,7 @@ async function LayoutContent({
 
   return (
     <body
-      className={`${inter.variable} ${jetbrainsMono.variable} font-sans min-h-screen bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary-foreground`}
+      className={`${jetbrainsMono.variable} font-sans min-h-screen bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary-foreground`}
       suppressHydrationWarning
     >
       {/* Skip to content link for accessibility */}
@@ -615,6 +606,14 @@ async function LayoutContent({
             const preloadCriticalResources = () => {
              
               
+              const criticalImages = [
+                '/optimized/profile.webp',
+                '/optimized/glisten.webp',
+                '/optimized/naformu-white.webp',
+                '/optimized/redefine.webp',
+                '/optimized/chlebicky.webp',
+                '/optimized/kta.webp',
+              ];
               criticalImages.forEach(src => {
                 const link = document.createElement('link');
                 link.rel = 'preload';
@@ -653,7 +652,7 @@ export default async function LocaleLayout({
       lang={locale} 
       dir="ltr"
       suppressHydrationWarning
-      className="scroll-smooth"
+      className="scroll-smooth relative"
     >
       <head>
         {/* Critical resource hints */}
@@ -680,7 +679,6 @@ export default async function LocaleLayout({
         
         {/* Security headers */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-        <meta httpEquiv="X-Frame-Options" content="DENY" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         
@@ -688,7 +686,7 @@ export default async function LocaleLayout({
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/site.webmanifest" />
         
         {/* Additional meta tags for SEO */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -706,8 +704,6 @@ export default async function LocaleLayout({
        
         
         {/* Preload critical fonts */}
-        <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossOrigin="" />
-        <link rel="preload" href="/fonts/boska-latin-400.woff2" as="font" type="font/woff2" crossOrigin="" />
       </head>
       
       <Suspense fallback={

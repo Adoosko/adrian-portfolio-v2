@@ -10,71 +10,38 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  
- 
-  
-  
-  
-  
-  // Experimental features len pre pokročilé use cases
-  experimental: {
-    // ❌ NEPOTREBUJETE pre statický portfolio projekt
-    // ppr: 'incremental',
-    // dynamicIO: true,
-    // useCache: true,
-    
-    // ✅ STABLE optimalizácie
-    optimizeCss: true,
-    optimizePackageImports: [
-      'motion/react',
-      'lucide-react',
-      'next-intl'
-    ],
-    
-  
-  },
-  
-  // Headers pre statický obsah
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;",
           },
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
           },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
         ],
       },
     ];
   },
-  
-  // Webpack optimalizácie s Turbopack
-  webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            priority: 10,
-          },
-          motion: {
-            test: /[\\/]node_modules[\\/]motion/,
-            name: 'motion',
-            priority: 20,
-          },
-        },
-      };
-    }
-    return config;
-  },
 };
+  
+ 
 
 const withNextIntl = createNextIntlPlugin();
 

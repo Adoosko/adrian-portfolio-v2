@@ -29,7 +29,7 @@ export default function LanguageSwitcher() {
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
-        className={`
+        className={`relative
           flex items-center space-x-2 px-3 py-2 
           bg-background/80 backdrop-blur-sm
           border border-border/50 rounded-lg

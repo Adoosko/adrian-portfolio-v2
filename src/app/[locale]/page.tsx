@@ -72,7 +72,7 @@ export default async function HomePage({ params }: HomePageProps) {
   };
 
   return (
-    <main>
+    <main className="relative">
       {/* Statické komponenty - renderujú sa pri build time */}
       <Navigation data={navigationData} />
       <Hero data={heroData} />
