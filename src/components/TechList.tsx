@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, MotionValue, useTransform } from "framer-motion";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 interface Tech {
   name: string;

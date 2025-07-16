@@ -13,14 +13,14 @@
     "description": "Jmenuji se Adrian Finik a pocházím z Oravy. Moje cesta programováním začala již v prvním ročníku střední školy, kdy jsem se ze zvědavosti pustil do základů HTML, CSS a JavaScriptu. Každý nový řádek kódu mě posouval dál a brzy jsem objevil pokročilejší technologie, jako React a Next.js, které mě naprosto pohltily. Dnes, v roce 2025, je Next.js mou hlavní platformou, ve které denně vyvíjím moderní weby a jsem s ní maximálně spokojený.\n\nMoje zkušenosti již nespočívají jen ve školních projektech – pracoval jsem na reálných zadáních, kde jsem si vyzkoušel i full stack vývoj a ověřil si, že moderní technologie, jako Prisma ORM či animace s Framer Motion, mají v dnešním světě své pevné místo. Kromě práce na klientské straně webu rád experimentuji s vlastními projekty, kde se nebojím zkoušet nové trendy a posouvat své hranice.\n\nVěřím, že žijeme v roce 2025 a je čas používat technologie, které tento rok definuje. Snažím se držet krok s dobou, inovovat a vytvářet weby, které jsou nejen funkční, ale také vizuálně atraktivní a moderní. Protože jen tak můžeme posouvat digitální svět vpřed.",
     "tech_list_intro": "Zde je několik technologií, se kterými v poslední době pracuji:",
     "technologies": [
-      { "name": "JavaScript (ES6+)", "logo": "/optimized/js.png" },
-      { "name": "TypeScript", "logo": "/optimized/ts.png" },
-      { "name": "React", "logo": "/optimized/react.png" },
+      { "name": "JavaScript (ES6+)", "logo": "/optimized/js.webp" },
+      { "name": "TypeScript", "logo": "/optimized/ts.webp" },
+      { "name": "React", "logo": "/optimized/react.webp" },
       { "name": "Next.js", "logo": "/optimized/nextjs.svg" },
-      { "name": "Node.js", "logo": "/optimized/nodejs.png" },
-      { "name": "Tailwind CSS", "logo": "/optimized/tailwind.png" },
-      { "name": "PostgreSQL", "logo": "/optimized/pg.png" },
-      { "name": "Framer Motion", "logo": "/optimized/framer.png" },
+      { "name": "Node.js", "logo": "/optimized/nodejs.webp" },
+      { "name": "Tailwind CSS", "logo": "/optimized/tailwind.webp" },
+      { "name": "PostgreSQL", "logo": "/optimized/pg.webp" },
+      { "name": "Framer Motion", "logo": "/optimized/framer.webp" },
       { "name": "Vercel", "logo": "/optimized/vercel.svg" }
     ]
   },
@@ -52,7 +52,7 @@
         "links": {
           "live": "https://naformu.adrianfinik.sk"
         },
-        "image": "/optimized/naformu-white.png"
+        "image": "/optimized/naformu-white.webp"
       },
       {
         "id": "4",
@@ -62,7 +62,7 @@
         "links": {
           "live": "https://redefine.adrianfinik.sk"
         },
-        "image": "/optimized/redefine.png"
+        "image": "/optimized/redefine.webp"
       },
       {
         "id": "5",
@@ -72,7 +72,7 @@
         "links": {
           "live": "https://kta.adrianfinik.sk"
         },
-        "image": "/optimized/kta.png"
+        "image": "/optimized/kta.webp"
       },
       {
         "id": "6",
@@ -82,7 +82,7 @@
         "links": {
           "live": "https://chlebik.adrianfinik.sk"
         },
-        "image": "/optimized/chlebicky.png"
+        "image": "/optimized/chlebicky.webp"
       },
       {
         "id": "7",
@@ -92,7 +92,7 @@
         "links": {
           "live": "https://glisten-ai.adrianfinik.sk/"
         },
-        "image": "/optimized/glisten.png"
+        "image": "/optimized/glisten.webp"
       }
     ]
   },

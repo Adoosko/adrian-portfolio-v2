@@ -42,7 +42,7 @@ const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     name: 'LinkedIn', 
-    href: 'www.linkedin.com/in/adrián-finik-26694536b',
+    href: 'https://www.linkedin.com/in/adrián-finik-26694536b',
     icon: Linkedin,
   },
   {

@@ -1,14 +1,15 @@
-// app/[locale]/page.tsx
+// src/app/[locale]/page.tsx
 import Footer from "@/components/layout/footer";
 import Navigation from "@/components/layout/navigation";
 import About from "@/components/sections/about";
 import { Hero } from "@/components/sections/hero";
-
-
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
-// Dynamicky importujte len komponenty, ktoré nie sú kritické pre first paint
+// PPR aktivácia pre túto route
+export const experimental_ppr = true;
+
+// Dynamické komponenty pre PPR streaming
 const Work = dynamic(() => import('@/components/sections/work'), {
   loading: () => <div className="h-96 animate-pulse bg-gray-100 rounded-lg" />
 });
@@ -17,8 +18,9 @@ const Contact = dynamic(() => import('@/components/sections/contact'), {
   loading: () => <div className="h-64 animate-pulse bg-gray-100 rounded-lg" />
 });
 
-// Async import pre správne načítanie lokalizačných súborov
+// Cached message loader pre PPR
 async function getMessages(locale: string) {
+  'use cache';
   try {
     const messages = await import(`../../../messages/${locale}.json`);
     return messages.default;
@@ -36,7 +38,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   const messages = await getMessages(locale);
   
-  // Optimalizácia: Vytvorte data objekty len pre tie sekcie, ktoré ich potrebujú
+  // Optimalizované data objekty
   const heroData = {
     greeting: messages.Hero.greeting,
     title: messages.Hero.title,
@@ -72,10 +74,12 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <main>
+      {/* Statické komponenty - renderujú sa pri build time */}
       <Navigation data={navigationData} />
       <Hero data={heroData} />
       <About data={aboutData} />
       
+      {/* Dynamické komponenty - streamujú sa s PPR */}
       <Suspense fallback={<div className="h-96 animate-pulse bg-gray-100 rounded-lg" />}>
         <Work data={{
           title: messages.Work.title,
