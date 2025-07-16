@@ -2,7 +2,7 @@
 
 import { LazyMotion, domAnimation, motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { memo, useMemo, useRef } from 'react';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';

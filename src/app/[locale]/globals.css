@@ -180,6 +180,12 @@
     @apply bg-background text-foreground;
   }
 }
+h1 {
+  font-display: swap;
+  contain: layout;
+}
+
+
 
 .loader-wrapper {
   @apply fixed inset-0 z-50 flex items-center justify-center;
