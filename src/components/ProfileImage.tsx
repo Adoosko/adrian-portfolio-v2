@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, MotionValue, useSpring, useTransform } from "framer-motion";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useState } from "react";
 
 interface ProfileImageProps {
@@ -67,7 +67,7 @@ export function ProfileImage({ scrollProgress, priority = false }: ProfileImageP
           
           {/* Image */}
           <Image
-            src="/optimized/profile.png"
+            src="/optimized/profile.webp"
             alt="Adrian Finik"
             width={500}
             height={500}

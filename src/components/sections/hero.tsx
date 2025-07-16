@@ -3,6 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { useAnimationStore } from '@/stores/animation-store';
 import {
+  LazyMotion,
+  domAnimation,
   motion,
   useMotionValue,
   useSpring,
@@ -14,13 +16,12 @@ import {
   memo,
   startTransition,
   useCallback,
-  useLayoutEffect,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 
-// Optimalizované typy
 interface HeroProps {
   data: {
     greeting: string;
@@ -32,57 +33,56 @@ interface HeroProps {
   };
 }
 
-// Konstanty mimo komponentu pre lepšiu performance
+// Optimalizované constants pre 2025 performance
 const EASING_DRAMATIC = [0.22, 1, 0.36, 1] as const;
 const EASING_SMOOTH = [0.25, 0.46, 0.45, 0.94] as const;
 const EASING_BOUNCE = [0.68, -0.55, 0.265, 1.55] as const;
 
-// Optimalizované variants s memoization
+// Optimalizované variants pre rýchlejšie loading
 const createContainerVariants = (): Variants => ({
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      when: 'beforeChildren',
-      staggerChildren: 0.15,
+      duration: 0.6,
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
     },
   },
 });
 
 const createItemVariants = (): Variants => ({
   hidden: {
-    y: 60,
+    y: 30,
     opacity: 0,
-    filter: 'blur(10px)',
   },
   visible: {
     y: 0,
     opacity: 1,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.8,
-      ease: EASING_DRAMATIC,
+      duration: 0.6,
+      ease: EASING_SMOOTH,
     },
   },
 });
 
-// Optimalizované sparkle animácie
+// Optimalizované sparkle s hardware acceleration
 const sparkleVariants: Variants = {
   hidden: { scale: 0, rotate: 0 },
   visible: {
-    scale: [0, 1.2, 1],
+    scale: [0, 1.1, 1],
     rotate: [0, 180, 360],
     transition: {
-      duration: 2,
+      duration: 1.5,
       ease: EASING_BOUNCE,
       repeat: Infinity,
       repeatType: 'reverse',
-      delay: 1,
+      delay: 0.3,
     },
   },
 };
 
-// Memoizovaný ScrollButton komponent
+// Memoizovaný ScrollButton pre performance
 const ScrollButton = memo<{
   variant: 'outline' | 'default';
   size: 'lg';
@@ -103,7 +103,7 @@ const ScrollButton = memo<{
     <motion.div
       whileHover={{ scale: 1.05, y: -2 }}
       whileTap={{ scale: 0.95 }}
-      transition={{ duration: 0.3, ease: EASING_SMOOTH }}
+      transition={{ duration: 0.2, ease: EASING_SMOOTH }}
     >
       <Button
         variant={variant}
@@ -119,34 +119,44 @@ const ScrollButton = memo<{
 
 ScrollButton.displayName = 'ScrollButton';
 
-// Optimalizovaný AnimatedSparkle komponent
-const AnimatedSparkle = memo<{ color: string; delay?: number }>(({ color, delay = 0 }) => (
+// Optimalizovaný AnimatedSparkle pre performance
+const AnimatedSparkle = memo<{ 
+  color: string; 
+  delay?: number;
+  className?: string;
+}>(({ color, delay = 0, className = 'w-5 h-5' }) => (
   <motion.div
     variants={sparkleVariants}
     initial="hidden"
     animate="visible"
-    style={{ color }}
+    style={{ 
+      color, 
+      willChange: 'transform',
+      transform: 'translateZ(0)'
+    }}
     transition={{ delay }}
+    className={className}
   >
-    <Sparkles className="w-5 h-5" />
+    <Sparkles />
   </motion.div>
 ));
 
 AnimatedSparkle.displayName = 'AnimatedSparkle';
 
-// Optimalizovaný mouse tracking hook
+// Optimalizovaný mouse tracking s throttling
 const useMouseTracking = (isEnabled: boolean) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const containerRef = useRef<HTMLElement>(null);
+  const lastMoveTime = useRef(0);
 
   const rotateX = useSpring(
-    useTransform(mouseY, [-300, 300], [2, -2]),
+    useTransform(mouseY, [-300, 300], [1, -1]),
     { stiffness: 100, damping: 30 }
   );
   
   const rotateY = useSpring(
-    useTransform(mouseX, [-300, 300], [-2, 2]),
+    useTransform(mouseX, [-300, 300], [-1, 1]),
     { stiffness: 100, damping: 30 }
   );
 
@@ -154,15 +164,18 @@ const useMouseTracking = (isEnabled: boolean) => {
     (event: React.MouseEvent) => {
       if (!isEnabled || !containerRef.current) return;
 
+      // Throttling pre 60fps
+      const now = Date.now();
+      if (now - lastMoveTime.current < 16) return;
+      lastMoveTime.current = now;
+
       const rect = containerRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      // Použitie requestAnimationFrame pre smooth updates
-      startTransition(() => {
-        mouseX.set(event.clientX - centerX);
-        mouseY.set(event.clientY - centerY);
-      });
+      const sensitivity = 0.5;
+      mouseX.set((event.clientX - centerX) * sensitivity);
+      mouseY.set((event.clientY - centerY) * sensitivity);
     },
     [isEnabled, mouseX, mouseY]
   );
@@ -181,18 +194,23 @@ const useMouseTracking = (isEnabled: boolean) => {
   };
 };
 
-// Optimalizovaný intersection observer hook
+// SSR-safe intersection observer
 const useIntersectionObserver = (threshold = 0.3) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const elementRef = useRef<HTMLElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    setMounted(true);
+    
     const element = elementRef.current;
-    if (!element) return;
+    if (!element || typeof window === 'undefined') return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        startTransition(() => {
+          setIsVisible(entry.isIntersecting);
+        });
       },
       { threshold }
     );
@@ -201,14 +219,29 @@ const useIntersectionObserver = (threshold = 0.3) => {
     return () => observer.disconnect();
   }, [threshold]);
 
-  return { elementRef, isVisible };
+  return { elementRef, isVisible: mounted && isVisible };
 };
 
-// Hlavný Hero komponent s brutal optimalizáciami
+// Hlavný Hero komponent s LazyMotion wrapper
 export const Hero = memo<HeroProps>(({ data }) => {
   const animateHero = useAnimationStore((state) => state.animateHero);
   const { elementRef, isVisible } = useIntersectionObserver();
-  const isMouseTrackingEnabled = isVisible && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [canAnimate, setCanAnimate] = useState(false);
+  
+  // Delayed animation start pre performance
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setCanAnimate(true);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible]);
+
+  // Conditional mouse tracking
+  const isMouseTrackingEnabled = canAnimate && 
+    typeof window !== 'undefined' && 
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   
   const {
     containerRef,
@@ -222,88 +255,98 @@ export const Hero = memo<HeroProps>(({ data }) => {
   const containerVariants = useMemo(() => createContainerVariants(), []);
   const itemVariants = useMemo(() => createItemVariants(), []);
 
-  // Optimalizované CSS custom properties
-  const motionStyle = useMemo(() => ({
-    '--perspective': '1000px',
-    perspective: 'var(--perspective)',
-  } as React.CSSProperties), []);
-
+  // Optimalizované transform style
   const transformStyle = useMemo(() => ({
     rotateX,
     rotateY,
     transformStyle: 'preserve-3d' as const,
+    willChange: 'transform',
   }), [rotateX, rotateY]);
 
+  const shouldAnimate = animateHero && canAnimate;
+
   return (
-    <motion.section
-      ref={(el) => {
-        elementRef.current = el;
-        containerRef.current = el;
-      }}
-      variants={containerVariants}
-      initial="hidden"
-      animate={animateHero && isVisible ? 'visible' : 'hidden'}
-      className="min-h-screen flex items-center justify-center px-6 lg:px-20 relative overflow-hidden"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={motionStyle}
-    >
-      <motion.div 
-        className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl relative z-10"
-        style={transformStyle}
+    <LazyMotion features={domAnimation}>
+      <motion.section
+        ref={(el) => {
+          elementRef.current = el;
+          containerRef.current = el;
+        }}
+        variants={containerVariants}
+        initial="hidden"
+        animate={shouldAnimate ? 'visible' : 'hidden'}
+        className="min-h-screen flex items-center justify-center px-6 lg:px-20 relative overflow-hidden"
+        onMouseMove={isMouseTrackingEnabled ? handleMouseMove : undefined}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          perspective: '1200px',
+          contain: 'layout style',
+        }}
       >
-        {/* Left Content */}
-        <div className="lg:w-1/2 text-center lg:text-left lg:pr-16">
-          {/* Optimalizované greeting s sparkles */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center justify-center lg:justify-start space-x-3 mb-8"
-          >
-            <AnimatedSparkle color="#3b82f6" delay={0} />
-            <motion.p 
-              className="text-muted-foreground font-mono text-base lg:text-lg tracking-wider"
-              animate={{
-                opacity: [0.7, 1, 0.7],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
+        <motion.div 
+          className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl relative z-10"
+          style={transformStyle}
+        >
+          {/* Left Content */}
+          <div className="lg:w-1/2 text-center lg:text-left lg:pr-16">
+            {/* Greeting s optimalizovanými sparkles */}
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center justify-center lg:justify-start space-x-3 mb-8"
+            >
+              <AnimatedSparkle color="#3b82f6" delay={0} />
+              <motion.p 
+                className="text-muted-foreground font-mono text-base lg:text-lg tracking-wider"
+                animate={{
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                {data.greeting}
+              </motion.p>
+              <AnimatedSparkle color="#a855f7" delay={0.15} />
+            </motion.div>
+
+            {/* Main Title - LCP kritický element */}
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl lg:text-7xl font-serif text-foreground mb-6 leading-tight"
+              style={{
+                
+                contain: 'layout',
               }}
             >
-              {data.greeting}
+              {data.title}
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl lg:text-5xl font-bold text-muted-foreground mb-8 leading-tight"
+            >
+              {data.subtitle}
+            </motion.h2>
+          </div>
+
+          {/* Right Content */}
+          <div className="lg:w-1/2 flex flex-col items-center lg:items-start mt-12 lg:mt-0">
+            {/* Description */}
+            <motion.p
+              variants={itemVariants}
+              className="text-lg lg:text-xl text-muted-foreground max-w-md text-center lg:text-left mb-12 leading-relaxed"
+            >
+              {data.description}
             </motion.p>
-            <AnimatedSparkle color="#a855f7" delay={0.2} />
-          </motion.div>
 
-          {/* Typography optimalizácie */}
-          <motion.h1
-            variants={itemVariants}
-            className="text-4xl lg:text-7xl font-serif text-foreground mb-6 leading-tight"
-          >
-            {data.title}
-          </motion.h1>
-
-          <motion.h2
-            variants={itemVariants}
-            className="text-3xl lg:text-5xl font-bold text-muted-foreground mb-8 leading-tight"
-          >
-            {data.subtitle}
-          </motion.h2>
-        </div>
-
-        {/* Right Content */}
-        <div className="lg:w-1/2 flex flex-col items-center lg:items-start mt-12 lg:mt-0">
-          <motion.p
-            variants={itemVariants}
-            className="text-lg lg:text-xl text-muted-foreground max-w-md text-center lg:text-left mb-12 leading-relaxed"
-          >
-            {data.description}
-          </motion.p>
-
-          {/* Optimalizované CTA Buttons */}
-          <div className="flex flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-            <motion.div variants={itemVariants}>
+            {/* CTA Buttons */}
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-4"
+            >
               <ScrollButton
                 variant="outline"
                 size="lg"
@@ -317,9 +360,9 @@ export const Hero = memo<HeroProps>(({ data }) => {
                 >
                   <span>{data.ctaText}</span>
                   <motion.div
-                    animate={{ x: [0, 4, 0] }}
+                    animate={{ x: [0, 3, 0] }}
                     transition={{
-                      duration: 1.5,
+                      duration: 2,
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }}
@@ -334,9 +377,7 @@ export const Hero = memo<HeroProps>(({ data }) => {
                   transition={{ duration: 0.3 }}
                 />
               </ScrollButton>
-            </motion.div>
 
-            <motion.div variants={itemVariants}>
               <ScrollButton
                 variant="default"
                 size="lg"
@@ -344,7 +385,7 @@ export const Hero = memo<HeroProps>(({ data }) => {
                 className="font-mono relative overflow-hidden"
               >
                 <motion.span
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.2 }}
                 >
                   {data.cta2Text}
@@ -352,9 +393,9 @@ export const Hero = memo<HeroProps>(({ data }) => {
               </ScrollButton>
             </motion.div>
           </div>
-        </div>
-      </motion.div>
-    </motion.section>
+        </motion.div>
+      </motion.section>
+    </LazyMotion>
   );
 });
 
