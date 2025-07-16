@@ -183,7 +183,7 @@ async function generateJsonLd(locale: string, title: string, description: string
     jobTitle: 'Full Stack Developer',
     description,
     url: `${baseUrl}${locale === 'sk' ? '' : `/${locale}`}`,
-    image: `${baseUrl}/images/profile.jpg`,
+    image: `${baseUrl}/optimized/profile.webp`,
     sameAs: [
       'https://www.linkedin.com/in/adrián-finik-26694536b',
       'https://github.com/Adoosko',
