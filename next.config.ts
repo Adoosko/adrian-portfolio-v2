@@ -1,31 +1,92 @@
-// next.config.ts - Final optimized version
-import withBundleAnalyzer from '@next/bundle-analyzer';
+// next.config.ts - aktualizované pre Next.js 15.4+ stable
 import { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
-  // Image optimizations
+  // Image optimalizácie
   images: {
-    formats: ['image/avif', 'image/webp'],
-   
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 31536000,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  // Experimental features
+  
+ 
+  
+  // ✅ TURBOPACK JE STABLE - nie experimental
+  turbo: {
+    // Stable Turbopack konfigurácia
+    loaders: {
+      '.svg': ['@svgr/webpack'],
+    },
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+  
+  // Experimental features len pre pokročilé use cases
   experimental: {
-    ppr: 'incremental',
-    useCache: true,
+    // ❌ NEPOTREBUJETE pre statický portfolio projekt
+    // ppr: 'incremental',
+    // dynamicIO: true,
+    // useCache: true,
+    
+    // ✅ STABLE optimalizácie
     optimizeCss: true,
-    inlineCss:true,
-   
+    optimizePackageImports: [
+      'motion/react',
+      'lucide-react',
+      'next-intl'
+    ],
+    
+  
   },
-
   
-
-
+  // Headers pre statický obsah
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+        ],
+      },
+    ];
+  },
   
+  // Webpack optimalizácie s Turbopack
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            priority: 10,
+          },
+          motion: {
+            test: /[\\/]node_modules[\\/]motion/,
+            name: 'motion',
+            priority: 20,
+          },
+        },
+      };
+    }
+    return config;
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
 
-export default withBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-})(withNextIntl(nextConfig));
+export default withNextIntl(nextConfig);

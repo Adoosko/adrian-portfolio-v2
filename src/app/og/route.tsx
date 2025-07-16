@@ -39,7 +39,7 @@ export async function GET(request: Request) {
             style={{
               fontSize: 100,
               margin: 0,
-              fontFamily: '"Boska"',
+              
               fontWeight: 700,
               color: "#000",
             }}
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
             style={{
               fontSize: 50,
               margin: "20px 0 0",
-              fontFamily: '"Boska"',
+              
               fontWeight: 400,
               color: "#333",
             }}

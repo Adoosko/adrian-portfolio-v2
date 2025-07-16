@@ -1,10 +1,10 @@
 {
   "name": "adrian-portfolio-v2",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "next dev --turbo",
+    "build": "next build --turbo",
     "start": "next start",
     "lint": "next lint",
     "payload": "payload",

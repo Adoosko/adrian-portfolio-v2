@@ -18,9 +18,8 @@ const Contact = dynamic(() => import('@/components/sections/contact'), {
   loading: () => <div className="h-64 animate-pulse bg-gray-100 rounded-lg" />
 });
 
-// Cached message loader pre PPR
+// Async message loader bez 'use cache' - pre statický obsah
 async function getMessages(locale: string) {
-  'use cache';
   try {
     const messages = await import(`../../../messages/${locale}.json`);
     return messages.default;
@@ -31,11 +30,10 @@ async function getMessages(locale: string) {
 }
 
 interface HomePageProps {
-  params: Promise<{locale: string}>;
+  params: {locale: string};
 }
 
-export default async function HomePage({ params }: HomePageProps) {
-  const { locale } = await params;
+export default async function HomePage({ params: { locale } }: HomePageProps) {
   const messages = await getMessages(locale);
   
   // Optimalizované data objekty

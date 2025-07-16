@@ -72,7 +72,7 @@ const useOptimizedScroll = (containerRef: React.RefObject<HTMLElement>) => {
 };
 
 // Hlavný About komponent s opravenými errors ale zachovanými animáciami
-const About = memo<AboutProps>(({ data }) => {
+const About: React.FC<AboutProps> = ({ data }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { elementRef, isVisible } = useIntersectionObserver();
   const { scrollYProgress } = useOptimizedScroll(containerRef as React.RefObject<HTMLElement>);
@@ -146,8 +146,6 @@ const About = memo<AboutProps>(({ data }) => {
       </section>
     </LazyMotion>
   );
-});
-
-About.displayName = 'About';
+};
 
 export default About;

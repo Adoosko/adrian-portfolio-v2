@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return {
       url,
       lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: locale === 'sk' ? 1.0 : 0.8,
     };
   });
 
