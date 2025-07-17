@@ -1,63 +1,38 @@
 // src/app/[locale]/layout.tsx
+import ClientProviders from '@/components/ClientProviders';
 import { routing } from '@/i18n/routing';
-
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
-import dynamic from 'next/dynamic';
 import { JetBrains_Mono } from 'next/font/google';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import './globals.css';
 
-
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
   display: 'swap',
   fallback: ['Consolas', 'Monaco', 'Courier New', 'monospace'],
-  preload: false,
-  adjustFontFallback: false,
+  preload: true,
 });
 
-// Turbopack optimalizované dynamic imports
-const ClientProviders = dynamic(
-  () => import('@/components/ClientProviders'),
-  {
-    loading: () => (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-      </div>
-    ),
-  }
-);
+// SSR: Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-const ClientOnlyWrapperProvider = dynamic(
-  () => import('@/components/ClientOnlyWrapperProvider'),
-  { 
-    loading: () => null,
-    
-  }
-);
-
-// Advanced SEO message loader
+// SSR Message loader
 async function getMessages(locale: string) {
   try {
     const messages = await import(`../../../messages/${locale}.json`);
     return messages.default;
   } catch (error) {
-    console.warn(`Failed to load messages for locale ${locale}, falling back to English`);
+    console.warn(`Failed to load messages for locale ${locale}`);
     const fallback = await import('../../../messages/en.json');
     return fallback.default;
   }
 }
 
-// Advanced static params generation
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
-
-// Types
 interface LayoutProps {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -67,7 +42,7 @@ interface MetadataProps {
   params: Promise<{ locale: string }>;
 }
 
-// Advanced SEO metadata generation
+// Advanced SEO metadata generation for SSR
 export async function generateMetadata({ params }: MetadataProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Hero' });
@@ -167,7 +142,7 @@ export async function generateMetadata({ params }: MetadataProps) {
     robots: {
       index: true,
       follow: true,
-      nocache: false,
+      nocache: true, // Dôležité pre SSR
       googleBot: {
         index: true,
         follow: true,
@@ -196,16 +171,7 @@ export async function generateMetadata({ params }: MetadataProps) {
       },
     },
     
-    // Advanced Verification
-    verification: {
-      google: 'google-site-verification-code',
-      yandex: 'yandex-verification-code',
-      yahoo: 'yahoo-site-verification-code',
-      other: {
-        'msvalidate.01': 'bing-site-verification-code',
-        'facebook-domain-verification': 'facebook-domain-verification-code',
-      },
-    },
+   
     
     // Advanced App Links
     appLinks: {
@@ -257,14 +223,14 @@ export async function generateMetadata({ params }: MetadataProps) {
     icons: {
       icon: [
         { url: '/favicon.ico', sizes: '32x32' },
-        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-        { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-        { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+        { url: '/favicon-16x16.webp', sizes: '16x16', type: 'image/webp' },
+        { url: '/favicon-32x32.webp', sizes: '32x32', type: 'image/webp' },
+        { url: '/android-chrome-192x192.webp', sizes: '192x192', type: 'image/webp' },
+        { url: '/android-chrome-512x512.webp', sizes: '512x512', type: 'image/webp' },
       ],
       shortcut: '/favicon.ico',
       apple: [
-        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+        { url: '/apple-touch-icon.webp', sizes: '180x180', type: 'image/webp' },
       ],
       other: [
         {
@@ -579,8 +545,6 @@ async function LayoutContent({
             <div id="main-content" role="main" tabIndex={-1}>
               {children}
             </div>
-            
-            {!isBot && <ClientOnlyWrapperProvider />}
           </ClientProviders>
         </Suspense>
       </div>
@@ -604,8 +568,6 @@ async function LayoutContent({
             
             // Preload critical resources
             const preloadCriticalResources = () => {
-             
-              
               const criticalImages = [
                 '/optimized/profile.webp',
                 '/optimized/glisten.webp',
@@ -699,11 +661,6 @@ export default async function LocaleLayout({
         
         {/* Sitemap */}
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
-        
-        {/* Critical CSS preload */}
-       
-        
-        {/* Preload critical fonts */}
       </head>
       
       <Suspense fallback={

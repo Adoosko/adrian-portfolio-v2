@@ -1,63 +1,56 @@
-"use client";
+// src/components/ClientProviders.tsx
+'use client';
 
-import { ThemeProvider } from "@/components/theme-provider";
-import { useAnimationStore } from "@/stores/animation-store";
-import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
-import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { NextIntlClientProvider } from 'next-intl';
+import { ThemeProvider } from 'next-themes';
+import { ReactNode, useEffect, useState } from 'react';
+import { Toaster } from 'sonner';
 
-const Toaster = dynamic(
-  () => import("./ui/sonner").then((m) => m.Toaster),
-  {
-    ssr: false,
-  },
-);
-
-const CustomCursor = dynamic(
-  () => import("./CustomCursor").then((m) => m.CustomCursor),
-  {
-    ssr: false,
-  },
-);
-
-const LenisProvider = dynamic(
-  () => import("./LenisProvider").then((m) => m.LenisProvider),
-  {
-    ssr: false,
-  },
-);
-
-export default function ClientProviders({
-  children,
-  messages,
-  locale,
-}: {
-  children: React.ReactNode;
-  messages: AbstractIntlMessages;
+interface ClientProvidersProps {
+  children: ReactNode;
   locale: string;
-}) {
-  const setAnimateHero = useAnimationStore((state) => state.setAnimateHero);
+  messages: any;
+}
+
+export default function ClientProviders({ 
+  children, 
+  locale, 
+  messages 
+}: ClientProvidersProps) {
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setAnimateHero(true);
-  }, [setAnimateHero]);
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        {children}
+      </NextIntlClientProvider>
+    );
+  }
 
   return (
-    <>
-      <CustomCursor />
-      <NextIntlClientProvider locale={locale} messages={messages}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange={false}
-        >
-          <LenisProvider>
-            {children}
-            <Toaster />
-          </LenisProvider>
-        </ThemeProvider>
-      </NextIntlClientProvider>
-    </>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange={false}
+      >
+        {children}
+        <Toaster 
+          position="top-right" 
+          expand={true}
+          richColors
+          closeButton
+          toastOptions={{
+            duration: 4000,
+            className: 'font-mono',
+          }}
+        />
+      </ThemeProvider>
+    </NextIntlClientProvider>
   );
 }

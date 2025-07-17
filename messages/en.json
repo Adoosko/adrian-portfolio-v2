@@ -29,7 +29,6 @@
     "featured": "Featured Project",
     "no_projects": "No featured projects available.",
     "projects": [
-     
       {
         "id": "3",
         "title": "NaFormu",
@@ -52,47 +51,69 @@
         "links": {
           "live": "https://naformu.adrianfinik.sk"
         },
-        "image": "/optimized/naformu-white.webp"
+        "imageKey": "naformu"
       },
       {
         "id": "4",
         "title": "Redefine Gaming",
         "description": "This is a modern, animated website built with React. It heavily features video and animations to create a dynamic user experience, likely for a portfolio or showcase website.",
-        "technologies": ["React", "Vite", "GSAP", "Tailwind CSS", "ESLint", "Prettier"],
+        "technologies": [
+          "React",
+          "Vite",
+          "GSAP",
+          "Tailwind CSS",
+          "ESLint",
+          "Prettier"
+        ],
         "links": {
           "live": "https://redefine.adrianfinik.sk"
         },
-        "image": "/optimized/redefine.webp"
+        "imageKey": "redefine"
       },
       {
         "id": "5",
         "title": "KTA",
         "description": "Landing page for a Slovak company with a premium design, which deals with protection against cyber attacks.",
-        "technologies": ["React", "Vite", "Framer Motion", "Tailwind CSS"],
+        "technologies": [
+          "React",
+          "Vite",
+          "Framer Motion",
+          "Tailwind CSS"
+        ],
         "links": {
           "live": "https://kta.adrianfinik.sk"
         },
-        "image": "/optimized/kta.webp"
+        "imageKey": "kta"
       },
       {
         "id": "6",
         "title": "Chlebičky",
         "description": "Brand website for a maker of custom open-faced sandwiches for weddings and various occasions.",
-        "technologies": ["React", "Vite", "Tailwind CSS", "Framer Motion"],
+        "technologies": [
+          "React",
+          "Vite",
+          "Tailwind CSS",
+          "Framer Motion"
+        ],
         "links": {
           "live": "https://chlebik.adrianfinik.sk"
         },
-        "image": "/optimized/chlebicky.webp"
+        "imageKey": "chlebicky"
       },
       {
         "id": "7",
         "title": "Glisten AI",
         "description": "A modern portfolio that is editable with Prismic CMS.",
-        "technologies": ["Next.js", "Prismic", "Tailwind CSS", "Framer Motion"],
+        "technologies": [
+          "Next.js",
+          "Prismic",
+          "Tailwind CSS",
+          "Framer Motion"
+        ],
         "links": {
           "live": "https://glisten-ai.adrianfinik.sk/"
         },
-        "image": "/optimized/glisten.webp"
+        "imageKey": "glisten"
       }
     ]
   },

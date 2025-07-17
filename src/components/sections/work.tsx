@@ -1,219 +1,170 @@
+// src/components/work/Work.tsx
 'use client';
 
+import { projectImages } from '@/config/projectImages';
+import { type Project, type WorkData } from '@/types';
 import { ExternalLink, Github } from 'lucide-react';
-import { LazyMotion, domAnimation, m, useInView } from 'motion/react';
-import Image from "next/image";
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import Image from 'next/image';
+import { memo, useEffect, useState } from 'react';
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  links: {
-    github?: string;
-    live?: string;
-    demo?: string;
-  };
-  image?: string;
-}
+// Univerzálny blur placeholder
+const UNIVERSAL_BLUR = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIyNSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxmaWx0ZXIgaWQ9ImJsdXIiIHg9IjAiIHk9IjAiPgogICAgICA8ZmVHYXVzc2lhbkJsdXIgaW49IlNvdXJjZUdyYXBoaWMiIHN0ZERldmlhdGlvbj0iMTUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTVlN2ViIiBmaWx0ZXI9InVybCgjYmx1cikiLz4KPC9zdmc+";
 
 interface WorkProps {
-  data: {
-    title: string;
-    featured: string;
-    no_projects: string;
-    projects: Project[];
-  };
+  data: WorkData;
 }
 
-// Device detection
-const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
+const ProjectCard = memo<{ project: Project; featuredText: string }>(
+  ({ project, featuredText }) => {
+    const [mounted, setMounted] = useState(false);
 
-// Mobile-first animácie pre m komponent
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
+    useEffect(() => {
+      setMounted(true);
+    }, []);
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-  }
-};
+    const imageSrc = project.imageKey ? projectImages[project.imageKey] : null;
 
-// Optimalizovaný ProjectCard
-const ProjectCard = memo<{
-  project: Project;
-  featuredText: string;
-}>(({ project, featuredText }) => (
-  <div className="bg-card border border-border rounded-lg overflow-hidden">
-    <div className="aspect-video bg-muted relative">
-      {project.image ? (
-        <Image
-          src={project.image}
-          alt={project.title}
-          width={400}
-          height={225}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="text-muted-foreground text-sm">{project.title}</span>
+    return (
+      <div className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
+        <div className="aspect-video bg-muted relative overflow-hidden">
+          {imageSrc && mounted ? (
+            <Image
+              src={imageSrc}
+              alt={project.title}
+              width={400}
+              height={225}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              priority={false} // Explicitly disable preloading
+              placeholder="blur"
+              blurDataURL={UNIVERSAL_BLUR}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-muted">
+              <span className="text-muted-foreground text-sm font-mono">
+                {project.title}
+              </span>
+            </div>
+          )}
         </div>
-      )}
-    </div>
 
-    <div className="p-6">
-      <p className="text-sm text-muted-foreground mb-2">{featuredText}</p>
-      <h3 className="text-xl font-medium mb-3">{project.title}</h3>
-      <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
+        <div className="p-6">
+          {project.featured && (
+            <p className="text-sm text-muted-foreground mb-2 font-mono">
+              {featuredText}
+            </p>
+          )}
+          
+          <h3 className="text-xl font-medium mb-3 group-hover:text-primary transition-colors">
+            {project.title}
+          </h3>
+          
+          <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+            {project.description}
+          </p>
 
-      {project.technologies && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.technologies.map((tech, index) => (
-            <span key={tech} className="px-2 py-1 bg-muted rounded text-xs">
-              {tech}
-            </span>
-          ))}
+          {project.technologies?.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2 py-1 bg-muted rounded text-xs font-mono"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            {project.links?.github && (
+              <a
+                href={project.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-muted rounded hover:bg-muted/80 transition-colors"
+                aria-label={`View ${project.title} on GitHub`}
+              >
+                <Github size={16} />
+              </a>
+            )}
+            {(project.links?.live || project.links?.demo) && (
+              <a
+                href={project.links.live || project.links.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 bg-muted rounded hover:bg-muted/80 transition-colors"
+                aria-label={`View ${project.title} live demo`}
+              >
+                <ExternalLink size={16} />
+              </a>
+            )}
+          </div>
         </div>
-      )}
-
-      <div className="flex gap-2">
-        {project.links?.github && (
-          <a
-            href={project.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-muted rounded hover:bg-muted/80 transition-colors"
-            aria-label={`View ${project.title} on GitHub`}
-          >
-            <Github size={16} />
-          </a>
-        )}
-        {(project.links?.live || project.links?.demo) && (
-          <a
-            href={project.links.live || project.links.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-muted rounded hover:bg-muted/80 transition-colors"
-            aria-label={`View ${project.title} live demo`}
-          >
-            <ExternalLink size={16} />
-          </a>
-        )}
       </div>
-    </div>
-  </div>
-));
+    );
+  }
+);
 
 ProjectCard.displayName = 'ProjectCard';
 
-// Mobile Slider
-const MobileSlider = memo<{
-  projects: Project[];
-  featuredText: string;
-}>(({ projects, featuredText }) => (
-  <Swiper
-    modules={[Pagination]}
-    spaceBetween={20}
-    slidesPerView={1}
-    pagination={{ clickable: true }}
-    className="max-w-sm mx-auto"
-  >
-    {projects.map((project) => (
-      <SwiperSlide key={project.id}>
-        <ProjectCard project={project} featuredText={featuredText} />
-      </SwiperSlide>
-    ))}
-  </Swiper>
-));
-
-MobileSlider.displayName = 'MobileSlider';
-
-// Desktop Grid s m komponentom
-const DesktopGrid = memo<{
-  projects: Project[];
-  featuredText: string;
-}>(({ projects, featuredText }) => (
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {projects.map((project) => (
-      <m.div key={project.id} variants={fadeInUp}>
-        <ProjectCard project={project} featuredText={featuredText} />
-      </m.div>
-    ))}
-  </div>
-));
-
-DesktopGrid.displayName = 'DesktopGrid';
-
-// Hlavný Work komponent s m komponentom
 const Work = memo<WorkProps>(({ data }) => {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [deviceIsMobile, setDeviceIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const checkDevice = () => setDeviceIsMobile(isMobile());
-    checkDevice();
-    window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
+    setMounted(true);
   }, []);
 
-  const containerVariants = useMemo(() => staggerContainer, []);
-  const itemVariants = useMemo(() => fadeInUp, []);
-
-  return (
-    <LazyMotion features={domAnimation}>
-      <section id="work" ref={ref} className="py-20 px-6 lg:px-20">
+  if (!mounted) {
+    return (
+      <section className="py-20 px-6 lg:px-20">
         <div className="max-w-6xl mx-auto">
-          <m.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-          >
-            {/* Section Header */}
-            <m.div variants={itemVariants} className="mb-16 text-center">
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <span className="text-sm text-muted-foreground">02</span>
-                <h2 className="text-3xl font-light">{data.title}</h2>
-                <div className="flex-1 h-px bg-border" />
+          <div className="mb-16 text-center">
+            <h2 className="text-3xl font-light">{data.title}</h2>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="aspect-video bg-gray-200 rounded-lg mb-4" />
+                <div className="h-4 bg-gray-200 rounded mb-2" />
+                <div className="h-3 bg-gray-200 rounded w-2/3" />
               </div>
-            </m.div>
-
-            {/* Projects */}
-            {data.projects.length > 0 ? (
-              deviceIsMobile ? (
-                <MobileSlider
-                  projects={data.projects}
-                  featuredText={data.featured}
-                />
-              ) : (
-                <DesktopGrid
-                  projects={data.projects}
-                  featuredText={data.featured}
-                />
-              )
-            ) : (
-              <m.div
-                variants={itemVariants}
-                className="text-center py-12"
-              >
-                <p className="text-muted-foreground">{data.no_projects}</p>
-              </m.div>
-            )}
-          </m.div>
+            ))}
+          </div>
         </div>
       </section>
-    </LazyMotion>
+    );
+  }
+
+  return (
+    <section id="work" className="py-20 px-6 lg:px-20">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-16 text-center">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <span className="text-sm text-muted-foreground font-mono">02</span>
+            <h2 className="text-3xl font-light">{data.title}</h2>
+            <div className="flex-1 h-px bg-border" />
+          </div>
+        </div>
+
+        {data.projects.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {data.projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                featuredText={data.featured}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">{data.no_projects}</p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 });
 
