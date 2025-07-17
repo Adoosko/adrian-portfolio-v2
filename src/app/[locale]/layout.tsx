@@ -627,7 +627,10 @@ export default async function LocaleLayout({
         <link rel="dns-prefetch" href="//linkedin.com" />
         
         {/* Advanced viewport configuration */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+        <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" 
+  />
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

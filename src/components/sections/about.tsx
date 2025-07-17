@@ -88,7 +88,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
           }
         }}
         className="min-h-screen py-20 px-6 lg:px-20 bg-white dark:bg-black"
-        aria-labelledby="about-heading"
+         aria-label="O mne sekcia"
       >
         <div className="max-w-4xl mx-auto">
           {isVisible && (

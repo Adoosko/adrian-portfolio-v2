@@ -184,6 +184,8 @@ export default function Navigation({ data }: NavigationProps) {
             <button
               onClick={toggleMobileMenu}
               className="p-2 rounded-lg hover:bg-muted transition-colors"
+              aria-label={isMobileMenuOpen ? "Zatvoriť menu" : "Otvoriť menu"}
+  aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
