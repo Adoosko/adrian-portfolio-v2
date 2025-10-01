@@ -13,15 +13,16 @@
     "description": "Jmenuji se Adrian Finik a pocházím z Oravy. Moje cesta programováním začala již v prvním ročníku střední školy, kdy jsem se ze zvědavosti pustil do základů HTML, CSS a JavaScriptu. Každý nový řádek kódu mě posouval dál a brzy jsem objevil pokročilejší technologie, jako React a Next.js, které mě naprosto pohltily. Dnes, v roce 2025, je Next.js mou hlavní platformou, ve které denně vyvíjím moderní weby a jsem s ní maximálně spokojený.\n\nMoje zkušenosti již nespočívají jen ve školních projektech – pracoval jsem na reálných zadáních, kde jsem si vyzkoušel i full stack vývoj a ověřil si, že moderní technologie, jako Prisma ORM či animace s Framer Motion, mají v dnešním světě své pevné místo. Kromě práce na klientské straně webu rád experimentuji s vlastními projekty, kde se nebojím zkoušet nové trendy a posouvat své hranice.\n\nVěřím, že žijeme v roce 2025 a je čas používat technologie, které tento rok definuje. Snažím se držet krok s dobou, inovovat a vytvářet weby, které jsou nejen funkční, ale také vizuálně atraktivní a moderní. Protože jen tak můžeme posouvat digitální svět vpřed.",
     "tech_list_intro": "Zde je několik technologií, se kterými v poslední době pracuji:",
     "technologies": [
-      { "name": "JavaScript (ES6+)", "logo": "/optimized/js.webp" },
-      { "name": "TypeScript", "logo": "/optimized/ts.webp" },
-      { "name": "React", "logo": "/optimized/react.webp" },
-      { "name": "Next.js", "logo": "/optimized/nextjs.svg" },
-      { "name": "Node.js", "logo": "/optimized/nodejs.webp" },
-      { "name": "Tailwind CSS", "logo": "/optimized/tailwind.webp" },
-      { "name": "PostgreSQL", "logo": "/optimized/pg.webp" },
-      { "name": "Framer Motion", "logo": "/optimized/framer.webp" },
-      { "name": "Vercel", "logo": "/optimized/vercel.svg" }
+      "MongoDB",
+      "NeonDB",
+      "Prisma",
+      "Better Auth",
+      "Resend",
+      "AWS S3",
+      "Next.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "PayloadCMS"
     ]
   },
   "Work": {
@@ -29,6 +30,30 @@
     "featured": "Doporučený projekt",
     "no_projects": "Nejsou k dispozici žádné doporučené projekty.",
     "projects": [
+      {
+        "id": "2",
+        "title": "CINEMX",
+        "description": "CINEMX je streamovací platforma filmů nové generace vytvořená pro účely učení. Obsahuje plně vlastní video přehrávač s haptickou zpětnou vazbou, realtime vyhledávání a filtrování, 4K streamování, AI generované trailery, sledování historie a flexibilní předplatné (vše v demo/test režimu). Postaveno s moderními webovými technologiemi pro demonstraci možností streamovacích platforem.",
+        "technologies": [
+          "Next.js 15",
+          "TypeScript",
+          "Tailwind CSS",
+          "Shadcn UI",
+          "Framer Motion",
+          "PostgreSQL",
+          "Prisma",
+          "AWS S3",
+          "OpenAI",
+          "ElevenLabs",
+          "Polar.sh",
+          "Better Auth",
+          "Resend"
+        ],
+        "links": {
+          "live": "https://cinemx.adrianfinik.sk"
+        },
+        "imageKey": "cinemx"
+      },
       {
         "id": "3",
         "title": "NaFormu",
@@ -74,12 +99,7 @@
         "id": "5",
         "title": "KTA",
         "description": "Landing page pro slovenskou společnost s prémiovým designem, která se zabývá ochranou proti kybernetickým útokům.",
-        "technologies": [
-          "React",
-          "Vite",
-          "Framer Motion",
-          "Tailwind CSS"
-        ],
+        "technologies": ["React", "Vite", "Framer Motion", "Tailwind CSS"],
         "links": {
           "live": "https://kta.adrianfinik.sk"
         },
@@ -89,12 +109,7 @@
         "id": "6",
         "title": "Chlebičky",
         "description": "Brandová webová stránka pro výrobce obložených chlebíčků na svatby a různé příležitosti.",
-        "technologies": [
-          "React",
-          "Vite",
-          "Tailwind CSS",
-          "Framer Motion"
-        ],
+        "technologies": ["React", "Vite", "Tailwind CSS", "Framer Motion"],
         "links": {
           "live": "https://chlebik.adrianfinik.sk"
         },
@@ -104,12 +119,7 @@
         "id": "7",
         "title": "Glisten AI",
         "description": "Moderní portfolio, které je editovatelné pomocí Prismic CMS.",
-        "technologies": [
-          "Next.js",
-          "Prismic",
-          "Tailwind CSS",
-          "Framer Motion"
-        ],
+        "technologies": ["Next.js", "Prismic", "Tailwind CSS", "Framer Motion"],
         "links": {
           "live": "https://glisten-ai.adrianfinik.sk/"
         },
