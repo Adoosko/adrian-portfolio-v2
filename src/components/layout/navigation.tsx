@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Download, Menu, X } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
-import LanguageSwitcher from '../LanguageSwitcher';
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Download, Menu, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 interface NavigationProps {
   data: {
@@ -19,17 +19,17 @@ export default function Navigation({ data }: NavigationProps) {
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState("");
 
   const navItems = [
-    { name: data.about, href: '#about', index: '01' },
-    { name: data.work, href: '#work', index: '02' },
-    { name: data.contact, href: '#contact', index: '03' },
+    { name: data.about, href: "#about", index: "01" },
+    { name: data.work, href: "#work", index: "02" },
+    { name: data.contact, href: "#contact", index: "03" },
   ];
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Scroll detection
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -44,11 +44,11 @@ export default function Navigation({ data }: NavigationProps) {
           }
         });
       },
-      { threshold: 0.3, rootMargin: '-20% 0px -80% 0px' }
+      { threshold: 0.3, rootMargin: "-20% 0px -80% 0px" }
     );
 
     // Attach scroll listener
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Observe sections
     navItems.forEach((item) => {
@@ -57,23 +57,23 @@ export default function Navigation({ data }: NavigationProps) {
     });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       observer.disconnect();
     };
   }, []);
 
   const scrollToSection = useCallback((href: string) => {
     const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element?.scrollIntoView({ behavior: "smooth", block: "start" });
     setIsMobileMenuOpen(false);
   }, []);
 
   const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const toggleMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen(prev => !prev);
+    setIsMobileMenuOpen((prev) => !prev);
   }, []);
 
   // Server-side fallback
@@ -125,11 +125,13 @@ export default function Navigation({ data }: NavigationProps) {
 
   // Client-side render
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-      isScrolled
-        ? 'bg-background/90 backdrop-blur-xl border-b border-border shadow-lg'
-        : 'bg-transparent'
-    }`}>
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        isScrolled
+          ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-lg"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
@@ -148,9 +150,9 @@ export default function Navigation({ data }: NavigationProps) {
                   <button
                     onClick={() => scrollToSection(item.href)}
                     className={`relative z-10 flex items-center space-x-2 px-4 py-2.5 text-sm font-medium transition-colors duration-200 rounded-lg hover:scale-105 ${
-                      activeSection === item.href 
-                        ? 'text-foreground bg-muted' 
-                        : 'text-muted-foreground hover:text-foreground'
+                      activeSection === item.href
+                        ? "text-foreground bg-muted"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     <span className="font-mono text-xs">{item.index}</span>
@@ -163,7 +165,7 @@ export default function Navigation({ data }: NavigationProps) {
             <div className="flex items-center space-x-4 ml-6">
               <ThemeToggle />
               <LanguageSwitcher />
-              
+
               <a
                 href="/resume.pdf"
                 target="_blank"
@@ -180,12 +182,12 @@ export default function Navigation({ data }: NavigationProps) {
           <div className="lg:hidden flex items-center space-x-3">
             <LanguageSwitcher />
             <ThemeToggle />
-            
+
             <button
               onClick={toggleMobileMenu}
               className="p-2 rounded-lg hover:bg-muted transition-colors"
-              aria-label={isMobileMenuOpen ? "Zatvoriť menu" : "Otvoriť menu"}
-  aria-expanded={isMobileMenuOpen}
+              aria-label={isMobileMenuOpen ? "Zatvoriť menu." : "Otvoriť menu"}
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
