@@ -1,19 +1,14 @@
-// eslint.config.mjs
-import { FlatCompat } from '@eslint/eslintrc';
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
 const eslintConfig = [
-  // Next.js základné konfigurácie
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-
+  ...nextCoreWebVitals,
+  ...nextTypescript,
   // Vlastné pravidlá pre limitovanie errorov
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
@@ -67,7 +62,6 @@ const eslintConfig = [
       '@next/next/no-title-in-document-head': 'warn',
     },
   },
-
   // Špecifické pravidlá pre config súbory
   {
     files: ['*.config.{js,mjs,ts}', 'next.config.{js,mjs,ts}'],
@@ -76,7 +70,6 @@ const eslintConfig = [
       'import/no-anonymous-default-export': 'off',
     },
   },
-
   // Ignorované súbory a priečinky
   {
     ignores: [
@@ -90,7 +83,7 @@ const eslintConfig = [
       '.env*',
       '*.log',
     ],
-  },
+  }
 ];
 
 export default eslintConfig;

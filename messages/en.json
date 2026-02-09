@@ -1,12 +1,19 @@
 {
   "HomePage": {},
   "Hero": {
-    "greeting": "Hi, my name is",
+    "greeting": "Available for work",
     "title": "Adrian Finik",
-    "subtitle": "I build things for the web.",
-    "description": "I'm a web developer specializing in creating exceptional digital experiences at minimalistic.studio.",
-    "ctaText": "Projects",
-    "cta2Text": "Contact"
+    "subtitle": "I craft",
+    "description": "Full-stack developer obsessed with pixel-perfect interfaces, silky animations, and scalable architecture. Turning complex problems into elegant digital experiences.",
+    "ctaText": "View Projects",
+    "cta2Text": "Get in Touch",
+    "roles": [
+      "web experiences.",
+      "modern interfaces.",
+      "digital products.",
+      "scalable systems.",
+      "creative solutions."
+    ]
   },
   "About": {
     "title": "About Me",

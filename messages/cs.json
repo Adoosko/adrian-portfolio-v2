@@ -1,12 +1,19 @@
 {
   "HomePage": {},
   "Hero": {
-    "greeting": "Ahoj, jmenuji se",
+    "greeting": "K dispozici pro spolupráci",
     "title": "Adrian Finik",
-    "subtitle": "Tvořím věci pro web.",
-    "description": "Jsem webový vývojář specializující se na tvorbu výjimečných digitálních zážitků v minimalistic.studio.",
-    "ctaText": "Projekty",
-    "cta2Text": "Kontakt"
+    "subtitle": "Tvořím",
+    "description": "Full-stack vývojář posedlý pixel-perfect rozhraními, plynulými animacemi a škálovatelnou architekturou. Přetvářím složité problémy v elegantní digitální zážitky.",
+    "ctaText": "Zobrazit projekty",
+    "cta2Text": "Kontaktujte mě",
+    "roles": [
+      "webové zážitky.",
+      "moderní rozhraní.",
+      "digitální produkty.",
+      "škálovatelné systémy.",
+      "kreativní řešení."
+    ]
   },
   "About": {
     "title": "O mně",

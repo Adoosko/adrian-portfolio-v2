@@ -1,8 +1,30 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @custom-variant dark (&:is(.dark *));
+
+/* ──────────────────────────────────────────────────────
+   Boska Variable Serif — editorial display font
+   ────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Boska";
+  src:
+    url("/fonts/boska/Boska-Variable.woff2") format("woff2"),
+    url("/fonts/boska/Boska-Variable.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Boska";
+  src:
+    url("/fonts/boska/Boska-VariableItalic.woff2") format("woff2"),
+    url("/fonts/boska/Boska-VariableItalic.woff") format("woff");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 @layer base {
   :root {
@@ -185,8 +207,6 @@ h1 {
   contain: layout;
 }
 
-
-
 .loader-wrapper {
   @apply fixed inset-0 z-50 flex items-center justify-center;
   @apply bg-background;
@@ -196,13 +216,15 @@ h1 {
 .loader-text-final {
   @apply text-4xl lg:text-6xl font-bold text-foreground;
   @apply tracking-tight;
-  
+
   /* Smooth font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   /* Zabráni layout shift */
-  font-feature-settings: "kern" 1, "liga" 1;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1;
   text-rendering: optimizeLegibility;
 }
 
@@ -251,4 +273,141 @@ h1 {
 .swiper-cards .swiper-slide {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ──────────────────────────────────────────────────────
+   Hero Section — Max Aesthetics
+   ────────────────────────────────────────────────────── */
+
+/* Use Boska for all serif text */
+.font-serif,
+.hero-name {
+  font-family: "Boska", Georgia, "Times New Roman", serif;
+}
+
+/* Role cycler height matches line-height */
+.hero-role-cycler {
+  height: 1.2em;
+}
+
+/* Orbital ring rotation */
+.hero-orbit-svg {
+  animation: hero-orbit-spin 60s linear infinite;
+}
+
+.hero-orbit-dot {
+  animation: hero-orbit-spin 20s linear infinite;
+  transform-origin: 350px 350px;
+}
+
+.hero-orbit-dot-2 {
+  animation: hero-orbit-spin-reverse 30s linear infinite;
+  transform-origin: 350px 350px;
+}
+
+@keyframes hero-orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hero-orbit-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Character hover distortion */
+.hero-char {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    letter-spacing 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  display: inline-block;
+}
+
+.hero-char:hover {
+  transform: translateY(-4px) scaleY(1.05);
+  color: hsl(var(--muted-foreground));
+}
+
+/* Name wrap hover effect — spread letters */
+.hero-name-wrap:hover .hero-char {
+  letter-spacing: 0.02em;
+}
+
+/* Badge subtle shimmer */
+.hero-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(var(--foreground) / 0.04) 50%,
+    transparent 100%
+  );
+  animation: hero-badge-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes hero-badge-shimmer {
+  0%,
+  100% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+}
+
+/* Primary button sweep effect */
+.hero-btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scroll indicator pulse ring */
+.hero-scroll-indicator::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--foreground) / 0.06);
+  animation: hero-scroll-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-pulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Smooth anti-aliased rendering for the hero */
+.hero-section {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }

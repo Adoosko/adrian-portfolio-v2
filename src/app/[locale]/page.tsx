@@ -9,7 +9,7 @@ import Hero from "@/components/sections/hero";
 import Work from "@/components/sections/work";
 
 // SSR: Zakázať static generation
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 // SSR message loader
@@ -18,7 +18,7 @@ async function getMessages(locale: string) {
     const messages = await import(`../../../messages/${locale}.json`);
     return messages.default;
   } catch {
-    const fallback = await import('../../../messages/en.json');
+    const fallback = await import("../../../messages/en.json");
     return fallback.default;
   }
 }
@@ -29,10 +29,10 @@ interface HomePageProps {
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
-  
+
   // SSR: Načítanie messages pri každom requeste
   const messages = await getMessages(locale);
-  
+
   // Optimalizované data objekty - iba texty, nie obrázky
   const heroData = {
     greeting: messages.Hero.greeting,
@@ -41,6 +41,7 @@ export default async function HomePage({ params }: HomePageProps) {
     description: messages.Hero.description,
     ctaText: messages.Hero.ctaText,
     cta2Text: messages.Hero.cta2Text,
+    roles: messages.Hero.roles,
   };
 
   const aboutData = {
@@ -95,7 +96,7 @@ export default async function HomePage({ params }: HomePageProps) {
     <main className="relative">
       {/* Všetky komponenty sa renderujú server-side */}
       <Navigation data={navigationData} />
-     <Hero data={heroData}></Hero>
+      <Hero data={heroData}></Hero>
       <About data={aboutData} />
       <Work data={workData} />
       <ClientOnly>
